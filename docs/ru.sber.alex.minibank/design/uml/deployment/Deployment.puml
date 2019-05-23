@@ -1,14 +1,26 @@
 @startuml
 
-package "Some Group" {
-HTTP - [First Component]
-[Another Component]
+
+
+node "server"{
+database "MySQL Database" as db
+
+    package "docker containers"{
+        artifact "Main application" as ma
+        artifact "Security application" as sa
+        artifact "Account application" as aa
+        artifact "DataAccess application" as da
+        ma -- sa
+        ma -- aa
+        sa -- da
+        aa -- da
+    }
+    da -- db
 }
 
-package "Other Groups" {
-FTP - [Second Component]
-
-[First Component] --> FTP
+node "client browser"{
+    [Browser]
 }
 
+[Browser] -- ma
 @enduml
