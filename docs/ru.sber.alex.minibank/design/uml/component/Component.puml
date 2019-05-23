@@ -1,14 +1,75 @@
 @startuml
 
-package "Some Group" {
-HTTP - [First Component]
-[Another Component]
+node "Main application" {
+    interface "HTTP" as httpMainApp
+    [Controller] as controllerMainApp
+    [BusinessLogic] as busLogMainApp
+
+    controllerMainApp .down.> busLogMainApp :use
+    controllerMainApp -up- httpMainApp
+
+    folder "View repository" {
+        [HtmlPage1\nMain page]
+        [HtmlPage2\nRegistration]
+        [HtmlPage3\nLogin]
+        [HtmlPage4\nPersonal office]
+        [HtmlPage5\nTransfer to]
+        [HtmlPage6\nPush money]
+        [HtmlPage7\nPull money]
+        [HtmlPage8\nSuccess]
+        [HtmlPage9\nError]
+    }
 }
 
-package "Other Groups" {
-FTP - [Second Component]
+node "Security application" {
+    interface "HTTP" as httpSecApp
+    [RestController] as restConSecApp
+    [BusinessLogic] as busLogSecApp
 
-[First Component] --> FTP
+    restConSecApp -up- httpSecApp
+    restConSecApp ..> busLogSecApp: use
 }
+
+node "Account application" {
+    interface "HTTP" as httpAccApp
+    [RestController] as restConAccApp
+    [BusinessLogic] as busLogAccApp
+
+    restConAccApp -up- httpAccApp
+    restConAccApp .down.> busLogAccApp: use
+}
+
+node "DataAccess application" {
+    interface "HTTP" as httpDataApp
+    [RestController] as restConDataApp
+    [BusinessLogic] as busLogDataApp
+
+    restConDataApp -up- httpDataApp
+    restConDataApp .down.> busLogDataApp: use
+}
+
+database "MySQL Database" {
+    interface DBConnector as jdbcSql
+
+    [clients]
+    [accounts]
+    [currencies]
+    [operations]
+    [dict_operations]
+    [logs]
+
+    [clients] -down- [accounts]
+    [currencies] -up- [accounts]
+    [accounts] -right- [operations]
+    [clients] -right- [logs]
+    [logs] -down- [operations]
+    [operations] -down- [dict_operations]
+}
+
+busLogMainApp -- httpSecApp
+busLogMainApp -- httpAccApp
+busLogSecApp -- httpDataApp
+busLogAccApp -- httpDataApp
+busLogDataApp -- jdbcSql
 
 @enduml
