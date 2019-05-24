@@ -1,7 +1,120 @@
 @startuml
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+actor Клиент
+participant "Main\napplication" as ma
+participant "Security\napplication" as sa
+participant "Account\napplication" as aa
+participant "DataAccess\napplication" as da
+database "MySQL\ndatabase" as db
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+== Регистрация ==
+Клиент -> ma: Регистрация
+ma --> Клиент: Возврат страницы\nрегистрации
+Клиент -> ma: Отправка формы\nрегистрации
+
+activate ma
+ma -> sa: Передача данных\nв модуль безопасности
+activate sa
+sa -> da: Проверка полученных данных
+activate da
+da -> db: Запрос данных
+db -> da: Ответ
+da -> sa: Возврат результата регистрации\nнового пользователя
+deactivate da
+sa -> ma: Возврат результата регистрации\nнового пользователя
+deactivate sa
+ma -> Клиент: Возврат страницы\n успеха или ошибки
+deactivate ma
+
+== Авторизация (вход в личный кабинет) ==
+
+Клиент -> ma: Вход
+ma --> Клиент: Возврат страницы\nавторизации
+Клиент -> ma: Отправка формы\nавторизации
+
+activate ma
+ma -> sa: Передача данных\nв модуль безопасности
+activate sa
+sa -> da: Проверка полученных данных
+activate da
+da -> db: Запрос данных
+db -> da: Ответ
+da -> sa: Возврат результата авторизации\n пользователя
+deactivate da
+sa -> ma: Возврат результата авторизации\n пользователя
+deactivate sa
+ma -> Клиент: Возврат страницы\n успеха или ошибки
+deactivate ma
+
+== Пополнение счета ==
+
+Клиент -> ma: Пополнение счета
+ma --> Клиент: Возврат страницы\nпополнения счета
+Клиент -> ma: Отправка данных
+
+activate ma
+ma -> aa: Передача данных\nв модуль счетов
+activate aa
+aa -> da: Инициализация транзакции
+activate da
+da -> db: Транзакция в БД
+db -> da: Ответ
+da -> aa: Возврат результата транзакции\n
+deactivate da
+aa -> ma: Возврат результата проведения операции
+deactivate aa
+ma -> Клиент: Возврат страницы\n успеха или ошибки
+deactivate ma
+
+== Вывод средств ==
+
+Клиент -> ma: Вывод средств
+ma --> Клиент: Возврат страницы\nвывода средств
+Клиент -> ma: Отправка данных
+
+activate ma
+ma -> aa: Передача данных\nв модуль счетов
+activate aa
+aa -> da: Инициализация транзакции
+activate da
+da -> db: Транзакция в БД
+db -> da: Ответ
+da -> aa: Возврат результата транзакции\n
+deactivate da
+aa -> ma: Возврат результата проведения операции
+deactivate aa
+ma -> Клиент: Возврат страницы\n успеха или ошибки
+deactivate ma
+
+== Перевод клиенту ==
+
+Клиент -> ma: Перевод средств
+ma --> Клиент: Возврат страницы\nперевода средств
+Клиент -> ma: Отправка данных
+
+activate ma
+ma -> aa: Передача данных\nв модуль счетов
+activate aa
+aa -> da: Инициализация транзакции
+activate da
+da -> db: Транзакция в БД
+db -> da: Ответ
+da -> aa: Возврат результата транзакции\n
+deactivate da
+aa -> ma: Возврат результата проведения операции
+deactivate aa
+ma -> Клиент: Возврат страницы\n успеха или ошибки
+deactivate ma
+
+== Выход ==
+
+Клиент -> ma: Выход
+
+activate ma
+ma -> sa: Передача данных\nв модуль безопасности
+activate sa
+sa -> ma: Возврат кода результата
+deactivate sa
+ma --> Клиент: Возврат главной страницы\n
+deactivate ma
+
 @enduml

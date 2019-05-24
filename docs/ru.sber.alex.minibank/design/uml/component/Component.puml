@@ -1,6 +1,6 @@
 @startuml
 
-node "Main application" {
+artifact "Main application" {
     interface "HTTP" as httpMainApp
     [Controller] as controllerMainApp
     [BusinessLogic] as busLogMainApp
@@ -21,7 +21,7 @@ node "Main application" {
     }
 }
 
-node "Security application" {
+artifact "Security application" {
     interface "HTTP" as httpSecApp
     [RestController] as restConSecApp
     [BusinessLogic] as busLogSecApp
@@ -30,7 +30,7 @@ node "Security application" {
     restConSecApp ..> busLogSecApp: use
 }
 
-node "Account application" {
+artifact "Account application" {
     interface "HTTP" as httpAccApp
     [RestController] as restConAccApp
     [BusinessLogic] as busLogAccApp
@@ -39,7 +39,7 @@ node "Account application" {
     restConAccApp .down.> busLogAccApp: use
 }
 
-node "DataAccess application" {
+artifact "DataAccess application" {
     interface "HTTP" as httpDataApp
     [RestController] as restConDataApp
     [BusinessLogic] as busLogDataApp
