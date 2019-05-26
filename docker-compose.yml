@@ -8,7 +8,7 @@ services:
   app:
     image: app
     depends_on:
-      - postgres
+      - mysql
     ports:
       - 8080:8080
     restart: always
