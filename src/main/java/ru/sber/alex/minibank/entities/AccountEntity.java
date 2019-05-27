@@ -3,7 +3,6 @@ package ru.sber.alex.minibank.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name="accounts")
@@ -39,6 +38,8 @@ public class AccountEntity {
     public AccountEntity(int clientId, int currencyID, BigDecimal deposit) {
         this.clientId = clientId;
         this.currencyID = currencyID;
+        //this.client.setId(clientId);
+        //this.currency.setId(currencyID);
         this.deposit = deposit;
     }
 
@@ -72,31 +73,5 @@ public class AccountEntity {
 
     public void setDeposit(BigDecimal deposit) {
         this.deposit = deposit;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AccountEntity that = (AccountEntity) o;
-        return id == that.id &&
-                clientId == that.clientId &&
-                currencyID == that.currencyID &&
-                Objects.equals(deposit, that.deposit);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, clientId, currencyID, deposit);
-    }
-
-    @Override
-    public String toString() {
-        return "AccountEntity{" +
-                "id=" + id +
-                ", clientId=" + clientId +
-                ", currencyID=" + currencyID +
-                ", deposit=" + deposit +
-                '}';
     }
 }

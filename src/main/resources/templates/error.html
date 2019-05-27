@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Error!</title>
     <meta charset="UTF-8">
@@ -8,12 +8,7 @@
     <body>
         <div>
             <h1>Error!</h1>
-            <p>
-                Caused by: ${name}
-            </p>
-        </div>
-        <div class="footer">
-            <h5> (c) Александр Питасов, 2019г.</h5>
+            <p th:text="'Caused by: '+${name}+'.'"/>
         </div>
     </body>
     <footer>

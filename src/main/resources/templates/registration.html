@@ -10,7 +10,7 @@
         <!--<img src="../image/sberminilogo.png" height="100" width="350"/> -->
     </div>
     <div class="mainblock">
-        <h1>Регистрация нового пользователя!</h1>
+        <h1>Регистрация нового пользователя</h1>
         <form action="#" th:action="@{/registration}" th:object="${client}" method="post">
             <p>Имя пользователя: <input type="text" th:field="*{login}" /></p>
             <p>Пароль: <input type="text" th:field="*{pass}" /></p>

@@ -6,12 +6,15 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.client.RestTemplate;
+import ru.sber.alex.minibank.layers.services.ClientDetailServiceImpl;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -27,6 +30,12 @@ public class MinibankApplication {
 	private String dbUsername;
 	@Value("${db.password}")
 	private String dbPassword;
+
+	@Bean
+	@Qualifier("myUserDetailServiceImpl")
+	public UserDetailsService getUserDetailService(){
+		return new ClientDetailServiceImpl();
+	}
 
 	@Autowired
 	private ObjectMapper objectMapper;

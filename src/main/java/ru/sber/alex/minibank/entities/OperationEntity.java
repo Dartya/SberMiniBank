@@ -17,7 +17,7 @@ public class OperationEntity {
     @Column(name="accounts_id")
     private int accountsId;
     @Column(name="secon_account_id")
-    private int seconAccountId;
+    private Integer seconAccountId;
     @Column(name="dict_operation_id")
     private int dictOperationID;
     private Timestamp timestamp;
@@ -43,7 +43,7 @@ public class OperationEntity {
     public OperationEntity() {
     }
 
-    public OperationEntity(int accountsId, int seconAccountId, int dictOperationID, Timestamp timestamp) {
+    public OperationEntity(int accountsId, Integer seconAccountId, int dictOperationID, Timestamp timestamp) {
         this.accountsId = accountsId;
         this.seconAccountId = seconAccountId;
         this.dictOperationID = dictOperationID;

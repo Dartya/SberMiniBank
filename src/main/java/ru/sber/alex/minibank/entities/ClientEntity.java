@@ -14,9 +14,11 @@ public class ClientEntity {
     private String login;
     @Column(name="pass")
     private String pass;
-    @Column(name="e-mail")
+    @Column(name="email")
     private String email;
+    @Column(name="name")
     private String name;
+    @Column(name="surname")
     private String surname;
     @Column(name="second_name")
     private String secondName;

@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name="DictOperationsEntity")
+@Table(name="dict_operations")
 public class DictOperationsEntity {
 
     @Id
