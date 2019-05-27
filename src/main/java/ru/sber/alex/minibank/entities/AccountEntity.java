@@ -2,6 +2,7 @@ package ru.sber.alex.minibank.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +17,21 @@ public class AccountEntity {
     @Column(name="currency_id")
     private int currencyID;
     private BigDecimal deposit;
+
+    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @JoinColumn(name="client_id", insertable = false, updatable = false)
+    private ClientEntity client;
+
+    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @JoinColumn(name="currency_id", insertable = false, updatable = false)
+    private CurrenciesEntity currency;
+
+    @OneToMany(mappedBy="accountId", fetch=FetchType.EAGER)
+    private List<OperationEntity> operationsAccId;
+
+    @OneToMany(mappedBy="secondAccountId", fetch=FetchType.EAGER)
+    private List<OperationEntity> operationsSecAccId;
+
 
     public AccountEntity() {
     }

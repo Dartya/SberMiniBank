@@ -1,9 +1,7 @@
 package ru.sber.alex.minibank.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +13,9 @@ public class CurrenciesEntity {
     @Column(name="currency_code")
     private String currencyCode;
     private String currency;
+
+    @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
+    private Collection<AccountEntity> accounts;
 
     public CurrenciesEntity() {
     }

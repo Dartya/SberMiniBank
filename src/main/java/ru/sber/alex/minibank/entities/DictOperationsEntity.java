@@ -1,8 +1,7 @@
 package ru.sber.alex.minibank.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +11,9 @@ public class DictOperationsEntity {
     @Id
     private int id;
     private String operation;
+
+    @OneToMany(mappedBy="dictOperation", fetch= FetchType.EAGER)
+    private Collection<OperationEntity> dictOperId;
 
     public DictOperationsEntity() {
     }

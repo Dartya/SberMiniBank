@@ -22,6 +22,18 @@ public class OperationEntity {
     private int dictOperationID;
     private Timestamp timestamp;
 
+    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @JoinColumn(name="accounts_id", insertable = false, updatable = false)
+    private AccountEntity accountId;
+
+    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @JoinColumn(name="secon_account_id", insertable = false, updatable = false)
+    private AccountEntity secondAccountId;
+
+    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @JoinColumn(name="dict_operation_id", insertable = false, updatable = false)
+    private DictOperationsEntity dictOperation;
+
     @ManyToMany
     @JoinTable (name="logs",
             joinColumns=@JoinColumn (name="operation_id"),

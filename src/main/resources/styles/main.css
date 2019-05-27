@@ -1,0 +1,37 @@
+body {
+    background: url(../image/Sberbank-Bank.jpg); /* Фоновый рисунок  */
+    min-height: 450px;
+    height: 1px; /* Требуется, чтобы дочерний блок взял высоту 100% */
+}
+
+footer{
+    border-radius: 5px;
+    padding: 10px;              /* Поля вокруг текста */
+    background: #30b44f;        /* Цвет фона */
+    margin: 5px;                /* Выравниваем слой по центру */
+    width: 95%;                 /* Ширина слоя */
+    opacity: 1;                 /* Значение прозрачности */
+    filter: alpha(Opacity=95);  /* Прозрачность в IE */
+}
+
+.header {
+    background-image: image("../image/Sberbank-Bank.jpg");
+    border-radius: 5px;
+    padding: 10px;              /* Поля вокруг текста */
+    background: #ffffff;        /* Цвет фона */
+    margin: 5px;                /* Выравниваем слой по центру */
+    width: 95%;                 /* Ширина слоя */
+    opacity: 1;                 /* Значение прозрачности */
+    filter: alpha(Opacity=95);  /* Прозрачность в IE */
+}
+
+.mainblock {
+    border-radius: 5px;
+    padding: 10px;              /* Поля вокруг текста */
+    background: #ffffff;        /* Цвет фона */
+    margin: 5px;                /* Выравниваем слой по центру */
+    width: 95%;                 /* Ширина слоя */
+    height: 90%;
+    opacity: 0.95;              /* Значение прозрачности */
+    filter: alpha(Opacity=95);  /* Прозрачность в IE */
+}

@@ -1,10 +1,7 @@
 package ru.sber.alex.minibank.entities;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="clients")
@@ -23,6 +20,9 @@ public class ClientEntity {
     private String surname;
     @Column(name="second_name")
     private String secondName;
+
+    @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
+    private List<AccountEntity> accounts;
 
     @ManyToMany
     @JoinTable (name="logs",
