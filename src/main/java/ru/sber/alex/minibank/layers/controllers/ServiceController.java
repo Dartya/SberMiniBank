@@ -25,12 +25,14 @@ public class ServiceController {
     public String index() {
         return "index";
     }
+
     //get registration page mapping
     @GetMapping(name="/registration")
     public String registrationGet(Model model){
         model.addAttribute("client", new ClientDto());
         return "registration";
     }
+
     //push POST from data
     @PostMapping("/registration")
     public String registrationPost(@ModelAttribute ClientDto client, Model model){
@@ -44,13 +46,25 @@ public class ServiceController {
         }
     }
 
+    @GetMapping("/error")
+    public String loginError(Model model){
+        model.addAttribute("loginError", true);
+        return "error";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(){
+        return "index";
+    }
+
     @GetMapping("/personaloffice")
     public String persOffice(){
-        return "personaloofice";
+        return "personaloffice";
     }
+
 }

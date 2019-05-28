@@ -1,14 +1,34 @@
 <!DOCTYPE HTML>
-<html xmlns:background-color="http://www.w3.org/1999/xhtml" xmlns:background-image="http://www.w3.org/1999/xhtml">
-<head>
-    <title>SberMiniBank home</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="../styles/main.css">
-</head>
+<!--html xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.springframework.org/schema/data/jaxb" -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>SberMiniBank home</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="styles/main.css"/>
+    </head>
+
+    <header>
+        <img src="../image/sberminilogo.png" height="100" width="300"/>
+    </header>
     <body>
-        <div class="header">
-            <img src="../image/sberminilogo.png" height="100" width="350"/>
-        </div>
+        <header>
+            <div>
+                <sec:authorize access="!isAuthenticated()">
+                    <form action="/login">
+                        <button class="float-left submit-button" >Войти</button>
+                    </form>
+                </sec:authorize>
+                <sec:authorize access="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Выйти"/>
+                    </form>
+                </sec:authorize>
+
+                Authenticated username:
+                [[${#httpServletRequest.remoteUser}]]
+            </div>
+        </header>
         <div class="mainblock">
             <h2>Добро пожаловать!</h2>
             <p>SberMiniBank - подразделение ПАО "СБЕРБАНК", осуществляющее обслуживание студентов. Количество сервисов ограничено, но они совершенно бесплатны.</p>

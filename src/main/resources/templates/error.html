@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Error!</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../styles/main.css">
-</head>
-    <body>
-        <div>
-            <h1>Error!</h1>
-            <p th:text="'Caused by: '+${name}+'.'"/>
-        </div>
+    <head>
+        <title>Error page</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="styles/main.css" th:href="@{/styles/main.css}" />
+    </head>
+
+    <header>
+    </header>
+    <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+        <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
+        <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
+        <a href="index.html" th:href="@{/index}">Back to Home Page</a>
     </body>
     <footer>
         <h5> (c) Александр Питасов, 2019г.</h5>

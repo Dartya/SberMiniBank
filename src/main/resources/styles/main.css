@@ -1,3 +1,13 @@
+header{
+    border-radius: 5px;
+    padding: 10px;              /* Поля вокруг текста */
+    background: #ffffff;        /* Цвет фона */
+    margin: 5px;                /* Выравниваем слой по центру */
+    width: 95%;                 /* Ширина слоя */
+    opacity: 1;                 /* Значение прозрачности */
+    filter: alpha(Opacity=95);  /* Прозрачность в IE */
+}
+
 body {
     background: url(../image/Sberbank-Bank.jpg); /* Фоновый рисунок  */
     min-height: 450px;
