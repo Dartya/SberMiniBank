@@ -1,17 +1,40 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <head>
         <title>Error page</title>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="styles/main.css" th:href="@{/styles/main.css}" />
+        <link rel="stylesheet" href="/static/css/main.css" th:href="@{/static/css/main.css}" />
     </head>
 
     <header>
+        <div style="contain: content">
+            <div style="float: left;">
+                <p><img src="/static/image/logo.png" height="100" width="300"/></p>
+            </div>
+            <div style="float: right;">
+                <div sec:authorize="#{!authenticated}">
+                    <form action="/login">
+                        <button class="float-left submit-button">Войти</button>
+                    </form>
+                </div>
+                <div sec:authorize access="#{isAuthenticated()}">
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Выйти"/>
+                    </form>
+                </div>
+
+                Authenticated username:
+                [[${#httpServletRequest.remoteUser}]]
+            </div>
+        </div>
     </header>
     <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
-        <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
-        <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-        <a href="index.html" th:href="@{/index}">Back to Home Page</a>
+        <div class="mainblock">
+            <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
+            <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
+            <p th:utext="${errorMes}"> error!</p>
+            <a href="/" th:href="@{/}">На главную</a>
+        </div>
     </body>
     <footer>
         <h5> (c) Александр Питасов, 2019г.</h5>

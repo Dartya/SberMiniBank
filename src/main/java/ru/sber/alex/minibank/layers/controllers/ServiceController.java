@@ -12,9 +12,6 @@ import java.util.Map;
 @Controller
 public class ServiceController {
 
-    @Autowired
-    private BusinessLogic businessLogic;
-
     @GetMapping("/greeting")
     public String greeting(@RequestParam(name="name", required = false, defaultValue = "World") String name, Map model){
         model.put("name", name);
@@ -25,27 +22,6 @@ public class ServiceController {
     public String index() {
         return "index";
     }
-
-    //get registration page mapping
-    @GetMapping(name="/registration")
-    public String registrationGet(Model model){
-        model.addAttribute("client", new ClientDto());
-        return "registration";
-    }
-
-    //push POST from data
-    @PostMapping("/registration")
-    public String registrationPost(@ModelAttribute ClientDto client, Model model){
-        String error = "Ошибка регистрации пользователя";
-        model.addAttribute("name", error);
-        if (businessLogic.registerAcc(client) != -1) {
-            model.addAttribute("client", client);
-            return "success";
-        } else {
-            return "error";
-        }
-    }
-
     @GetMapping("/error")
     public String loginError(Model model){
         model.addAttribute("loginError", true);
@@ -56,12 +32,12 @@ public class ServiceController {
     public String login(){
         return "login";
     }
-
+/*
     @GetMapping("/logout")
     public String logout(){
         return "index";
     }
-
+*/
     @GetMapping("/personaloffice")
     public String persOffice(){
         return "personaloffice";

@@ -2,34 +2,54 @@ header{
     border-radius: 5px;
     padding: 10px;              /* Поля вокруг текста */
     background: #ffffff;        /* Цвет фона */
-    margin: 5px;                /* Выравниваем слой по центру */
+    margin-left: auto;          /* Выравниваем слой по центру */
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 95%;                 /* Ширина слоя */
     opacity: 1;                 /* Значение прозрачности */
     filter: alpha(Opacity=95);  /* Прозрачность в IE */
+
 }
 
 body {
-    background: url(../image/Sberbank-Bank.jpg); /* Фоновый рисунок  */
+    background-image: url(/static/image/bankback.jpg); /* Фоновый рисунок  */
+    -moz-background-size: 100%; /* Firefox 3.6+ */
+    -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+    -o-background-size: 100%; /* Opera 9.6+ */
+    background-size: 100%; /* Современные браузеры */
+    background-repeat: no-repeat;
     min-height: 450px;
-    height: 1px; /* Требуется, чтобы дочерний блок взял высоту 100% */
+    background-color: #2a7731;
+    margin-left: auto;          /* Выравниваем слой по центру */
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 footer{
+    border: 1px double black;
     border-radius: 5px;
     padding: 10px;              /* Поля вокруг текста */
     background: #30b44f;        /* Цвет фона */
-    margin: 5px;                /* Выравниваем слой по центру */
+    margin-left: auto;          /* Выравниваем слой по центру */
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 95%;                 /* Ширина слоя */
     opacity: 1;                 /* Значение прозрачности */
     filter: alpha(Opacity=95);  /* Прозрачность в IE */
 }
 
 .header {
-    background-image: image("../image/Sberbank-Bank.jpg");
+    background-image: image("/static/image/bankback.jpg");
     border-radius: 5px;
     padding: 10px;              /* Поля вокруг текста */
     background: #ffffff;        /* Цвет фона */
-    margin: 5px;                /* Выравниваем слой по центру */
+    margin-left: auto;          /* Выравниваем слой по центру */
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 95%;                 /* Ширина слоя */
     opacity: 1;                 /* Значение прозрачности */
     filter: alpha(Opacity=95);  /* Прозрачность в IE */
@@ -39,9 +59,13 @@ footer{
     border-radius: 5px;
     padding: 10px;              /* Поля вокруг текста */
     background: #ffffff;        /* Цвет фона */
-    margin: 5px;                /* Выравниваем слой по центру */
     width: 95%;                 /* Ширина слоя */
     height: 90%;
     opacity: 0.95;              /* Значение прозрачности */
     filter: alpha(Opacity=95);  /* Прозрачность в IE */
+    min-height: 450px;
+    margin-left: auto;          /* Выравниваем слой по центру */
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

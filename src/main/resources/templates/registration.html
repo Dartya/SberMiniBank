@@ -1,14 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
-    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
 </head>
 <body>
-    <div class="header">
-        <!--<img src="../image/sberminilogo.png" height="100" width="350"/> -->
+<header>
+    <div style="contain: content">
+        <div style="float: left;">
+            <img src="/static/image/logo.png" height="100" width="300"/>
+        </div>
+        <div style="float: right;">
+            <div sec:authorize="#{!authenticated}">
+                <form action="/login">
+                    <button class="float-left submit-button">Войти</button>
+                </form>
+            </div>
+            <div sec:authorize access="#{isAuthenticated()}">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Выйти"/>
+                </form>
+            </div>
+
+            Authenticated username:
+            [[${#httpServletRequest.remoteUser}]]
+        </div>
     </div>
+</header>
     <div class="mainblock">
         <h1>Регистрация нового пользователя</h1>
         <form action="#" th:action="@{/registration}" th:object="${client}" method="post">

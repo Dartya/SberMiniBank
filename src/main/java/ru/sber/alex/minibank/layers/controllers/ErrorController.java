@@ -8,11 +8,22 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.io.IOException;
+
 
 @ControllerAdvice
 public class ErrorController {
 
     private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(IOException.class)
+    public String handleIOException(final IOException ioException, final Model model){
+        logger.error("IOException", ioException);
+        String errorMessage = (ioException != null ? ioException.getMessage() : "Unknown error");
+        model.addAttribute("errorMes", errorMessage);
+        return "error";
+    }
 
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
