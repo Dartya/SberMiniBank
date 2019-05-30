@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>SberMiniBank home</title>
-    <meta charset="UTF-8">
-    <title>Push money</title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head th:replace="fragments/head :: common_header(~{::title})">
+        <title>SberMiniBank - Внесение средств</title>
+    </head>
+
+    <div th:replace="fragments/header :: copyheader"></div>
+
     <body>
-        <div class="header">
-            <img src="../image/sberminilogo.png" height="100" width="350"/>
-        </div>
         <div class="mainblock">
             <h2>Внесение средств</h2>
 
-
         </div>
-        </body>
-    <footer>
-        <h5> (c) Александр Питасов, 2019г.</h5>
-    </footer>
+    </body>
+
+    <div th:replace="fragments/footer :: copy"></div>
 </html>

@@ -1,33 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>SberMiniBank home</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
-    </head>
-    <header>
-        <div style="contain: content">
-            <div style="float: left;">
-                <p><a href="/" th:href="@{/}"><img src="/static/image/logo.png" height="100" width="300"/></a></p>
-            </div>
-            <div style="float: right;">
-                <div sec:authorize="#{!isAuthenticated()}">
-                    <form action="/login">
-                        <button class="float-left submit-button">Войти</button>
-                    </form>
-                </div>
-                <div sec:authorize="#{!isAuthenticated()}">
-                    <form th:action="@{/logout}" method="post">
-                        <input type="submit" value="Выйти"/>
-                    </form>
-                </div>
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-                Authenticated username:
-                [[${#httpServletRequest.remoteUser}]]
-            </div>
-        </div>
-    </header>
+    <head th:replace="fragments/head :: common_header(~{::title})">
+        <title>SberMiniBank - Главная</title>
+    </head>
+
+    <div th:replace="fragments/header :: copyheader"></div>
+
     <body>
         <div class="mainblock">
             <h2>Добро пожаловать!</h2>
@@ -35,7 +15,6 @@
             <a href="/registration">Зарегистрироваться</a>
         </div>
     </body>
-    <footer>
-        <h5> (c) Александр Питасов, 2019г.</h5>
-    </footer>
+
+    <div th:replace="fragments/footer :: copy"></div>
 </html>

@@ -1,43 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    ...
-</head>
-<body>
-<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">My project</a>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<header>
+    <div class="cusheader" style="contain: content" th:fragment="copyheader">
+        <div style="float: left;">
+            <p><a href="/" th:href="@{/}"><img src="/static/image/logo.png" height="100" width="300"/></a></p>
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li th:classappend="${module == 'home' ? 'active' : ''}">
-                    <a href="#" th:href="@{/}">Home</a>
-                </li>
-                <li th:classappend="${module == 'tasks' ? 'active' : ''}">
-                    <a href="#" th:href="@{/task}">Tasks</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li th:if="${#authorization.expression('!isAuthenticated()')}">
-                    <a href="/signin" th:href="@{/signin}">
-                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
-                    </a>
-                </li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}">
-                    <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
-                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
-                    </a>
-                    <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
-                </li>
-            </ul>
+        <div style="float: right; padding: 5px">
+            <div sec:authorize="isAnonymous()">
+
+                <form th:action="@{/login}" method="post">
+                    <table>
+                        <tr><td colspan="2">
+                            <div th:if="${param.error}">
+                                Неверное имя пользователя или пароль.
+                            </div>
+                            <div th:if="${param.logout}">
+                                Вы успешно завершили сессию.
+                            </div>
+                        </td></tr>
+                        <tr><td><label> Логин: </label></td><td><input class="input" type="text" name="username"/></td></tr>
+                        <tr><td><label> Пароль: </label></td><td><input class="input" type="password" name="password"/></td></tr>
+                        <tr><td></td><td><input class="button" type="submit" value="Войти"/></td></tr>
+                    </table>
+                </form>
+                <!--form action="/login">
+                    <button class="float-left submit-button">Войти</button>
+                </form-->
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <table>
+                    <tr><td>Добро пожаловать,</td></tr>
+                    <tr><td><b>[[${#httpServletRequest.remoteUser}]]</b></td></tr>
+                    <tr><td>
+                        <form th:action="@{/logout}" method="post">
+                            <p><input class="button" type="submit" value="Выйти"/></p>
+                        </form>
+                    </td></tr>
+                </table>
+            </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+</header>

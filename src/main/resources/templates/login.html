@@ -1,32 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta charset="UTF-8">
-        <title>Login</title>
-        <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <head th:replace="fragments/head :: common_header(~{::title})">
+        <title>SberMiniBank - Логин</title>
     </head>
 
-    <header>
-        <p><a href="/" th:href="@{/}"><img src="/static/image/logo.png" height="100" width="300"/></a></p>
-    </header>
+    <div th:replace="fragments/header :: copyheader"></div>
+
     <body>
         <div class="mainblock">
             <h2>Авторизация</h2>
-
-            <div th:if="${param.error}">
-                Неверное имя пользователя или пароль.
-            </div>
-            <div th:if="${param.logout}">
-                Вы успешно завершили сессию.
-            </div>
-            <form th:action="@{/login}" method="post">
-                <div><label> Имя пользователя : <input type="text" name="username"/> </label></div>
-                <div><label> Пароль: <input type="password" name="password"/> </label></div>
-                <div><input type="submit" value="Войти"/></div>
-            </form>
+                <form th:action="@{/login}" method="post">
+                    <table>
+                        <tr><td colspan="2">
+                            <div th:if="${param.error}">
+                            Неверное имя пользователя или пароль.
+                        </div>
+                            <div th:if="${param.logout}">
+                                Вы успешно завершили сессию.
+                            </div>
+                        </td></tr>
+                        <tr><td><label> Логин: </label></td><td><input class="input" type="text" name="username"/></td></tr>
+                        <tr><td><label> Пароль: </label></td><td><input class="input" type="password" name="password"/></td></tr>
+                        <tr><td></td><td><input class="button" type="submit" value="Войти"/></td></tr>
+                    </table>
+                </form>
         </div>
     </body>
-    <footer>
-        <h5> (c) Александр Питасов, 2019г.</h5>
-    </footer>
+
+    <div th:replace="fragments/footer :: copy"></div>
 </html>

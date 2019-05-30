@@ -9,7 +9,6 @@ header{
     width: 95%;                 /* Ширина слоя */
     opacity: 1;                 /* Значение прозрачности */
     filter: alpha(Opacity=95);  /* Прозрачность в IE */
-
 }
 
 body {
@@ -42,7 +41,6 @@ footer{
 }
 
 .header {
-    background-image: image("/static/image/bankback.jpg");
     border-radius: 5px;
     padding: 10px;              /* Поля вокруг текста */
     background: #ffffff;        /* Цвет фона */
@@ -68,4 +66,71 @@ footer{
     margin-right: auto;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.cusfooter{
+    border: 1px double black;
+    border-radius: 5px;
+    padding: 10px;              /* Поля вокруг текста */
+    background: #30b44f;        /* Цвет фона */
+    margin-left: auto;          /* Выравниваем слой по центру */
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 95%;                 /* Ширина слоя */
+    opacity: 1;                 /* Значение прозрачности */
+    filter: alpha(Opacity=95);  /* Прозрачность в IE */
+}
+
+.cusheader{
+    border-radius: 5px;
+    padding: 10px;              /* Поля вокруг текста */
+    background: #ffffff;        /* Цвет фона */
+    margin-left: auto;          /* Выравниваем слой по центру */
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 95%;                 /* Ширина слоя */
+    opacity: 1;                 /* Значение прозрачности */
+    filter: alpha(Opacity=95);  /* Прозрачность в IE */
+}
+
+.button{
+    height:20px;
+}
+
+.input{
+    height:20px;
+}
+
+.tablex {
+    margin-left: auto;          /* Выравниваем слой по центру */
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 80%;
+    padding: 5px; /* Поля вокруг содержимого ячейки */
+    background: #ddffda; /* Цвет фона нечетных строк */
+    border: 1px solid #218f11; /* Рамка вокруг таблицы */
+    border-collapse: collapse; /* Убираем двойные линии между ячейками */
+}
+th {
+    background: #137d06; /* Цвет фона */
+    border-left: 1px solid #137d06;
+    border-bottom: 1px solid #137d06; /* Линия снизу */
+    color: white; /* Цвет текста */
+    text-align: center; /* Выравнивание по центру */
+}
+.green2 {
+    text-align: center; /* Выравнивание по центру */
+    border-bottom: 1px solid #137d06; /* Линия внизу ячейки */
+}
+.even {
+    text-align: center; /* Выравнивание по центру */
+    background: #98ca8e; /* Цвет фона четных строк */
+}
+.la {
+    border-left: 1px solid #137d06;
+    border-bottom: 1px solid #137d06; /* Линия снизу */
+    text-align: center; /* Выравнивание по центру */
 }

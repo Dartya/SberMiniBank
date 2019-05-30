@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>Success!</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="../static/css/main.css">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head th:replace="fragments/head :: common_header(~{::title})">
+        <title>SberMiniBank - Успех</title>
     </head>
+
+    <div th:replace="fragments/header :: copyheader"></div>
+
     <body>
-        <div class="header">
-            <img src="../image/sberminilogo.png" height="100" width="350"/>
-        </div>
         <div class="mainblock">
             <h1>Success!</h1>
             <p th:text="'id: ' + ${client.login}" />
@@ -18,9 +18,9 @@
             <p th:text="'surname: ' + ${client.surname}" />
             <p th:text="'secondName: ' + ${client.secondName}" />
             <a href="/registration">Зарегистрировать другого пользователя</a>
+            <a href="/">Назад на главную</a>
         </div>
     </body>
-    <footer>
-        <h5> (c) Александр Питасов, 2019г.</h5>
-    </footer>
+
+    <div th:replace="fragments/footer :: copy"></div>
 </html>

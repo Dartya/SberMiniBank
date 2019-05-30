@@ -1,19 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Personal Office</title>
-        <link rel="stylesheet" href="../static/css/main.css">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head th:replace="fragments/head :: common_header(~{::title})">
+        <title>SberMiniBank - Личный кабинет</title>
     </head>
+
+    <div th:replace="fragments/header :: copyheader"></div>
+
     <body>
-    <div class="header">
-        <img src="../image/sberminilogo.png" height="100" width="300"/>
-    </div>
-    <div class="mainblock">
-        <h2>Личный кабинет</h2>
-    </div>
+        <div class="mainblock">
+            <h2>Личный кабинет</h2>
+
+            <table class="tablex">
+                <tr>
+                    <th><p><b>№ операции</b></p></th>
+                    <th><p><b>Операция</b></p></th>
+                    <th><p><b>Счет</b></p></th>
+                    <th><p><b>Сумма</b></p></th>
+                    <th><p><b>Валюта</b></p></th>
+                    <th><p><b>От кого/кому</b></p></th>
+                    <th><p><b>Дата, время</b></p></th>
+                </tr>
+                <tr class="green2">
+                    <td class="la"><p>1</p></td>
+                    <td class="la"><p>2</p></td>
+                    <td class="la"><p>3</p></td>
+                    <td class="la"><p>4</p></td>
+                    <td class="la"><p>5</p></td>
+                    <td class="la"><p>6</p></td>
+                    <td class="la"><p>7</p></td>
+                </tr>
+                <tr class="even">
+                    <td class="la"><p>1</p></td>
+                    <td class="la"><p>2</p></td>
+                    <td class="la"><p>3</p></td>
+                    <td class="la"><p>4</p></td>
+                    <td class="la"><p>5</p></td>
+                    <td class="la"><p>6</p></td>
+                    <td class="la"><p>7</p></td>
+                </tr>
+            </table>
+        </div>
     </body>
-    <footer>
-        <h5> (c) Александр Питасов, 2019г.</h5>
-    </footer>
+
+    <div th:replace="fragments/footer :: copy"></div>
 </html>

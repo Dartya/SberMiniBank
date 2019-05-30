@@ -1,47 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Registration</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css" />
-</head>
-<body>
-<header>
-    <div style="contain: content">
-        <div style="float: left;">
-            <img src="/static/image/logo.png" height="100" width="300"/>
-        </div>
-        <div style="float: right;">
-            <div sec:authorize="#{!authenticated}">
-                <form action="/login">
-                    <button class="float-left submit-button">Войти</button>
-                </form>
-            </div>
-            <div sec:authorize access="#{isAuthenticated()}">
-                <form th:action="@{/logout}" method="post">
-                    <input type="submit" value="Выйти"/>
-                </form>
-            </div>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
-            Authenticated username:
-            [[${#httpServletRequest.remoteUser}]]
+    <head th:replace="fragments/head :: common_header(~{::title})">
+        <title>SberMiniBank - Регистрация</title>
+    </head>
+
+    <div th:replace="fragments/header :: copyheader"></div>
+
+    <body>
+        <div class="mainblock">
+            <h1>Регистрация нового пользователя</h1>
+            <form action="#" th:action="@{/registration}" th:object="${client}" method="post">
+                <table width="25%" cellspacing="0" cellpadding="4">
+                    <tr><td><p>Имя пользователя: </p></td><td><input class="input" type="text" th:field="*{login}" /></td></tr>
+                    <tr><td><p>Пароль: </p></td><td><input class="input" type="text" th:field="*{pass}" /></td></tr>
+                    <tr><td><p>e-mail: </p></td><td><input class="input" type="text" th:field="*{email}" /></td></tr>
+                    <tr><td><p>Имя: </p></td><td><input class="input" type="text" th:field="*{name}" /></td></tr>
+                    <tr><td><p>Фамилия: </p></td><td><input class="input" type="text" th:field="*{surname}" /></td></tr>
+                    <tr><td><p>Отчество: </p></td><td><input class="input" type="text" th:field="*{secondName}" /></td></tr>
+                    <tr><td><p><input class="button" type="submit" value="Подтвердить" /></p></td><td><input class="button" type="reset" value="Сброс" /></td></tr>
+                </table>
+            </form>
         </div>
-    </div>
-</header>
-    <div class="mainblock">
-        <h1>Регистрация нового пользователя</h1>
-        <form action="#" th:action="@{/registration}" th:object="${client}" method="post">
-            <p>Имя пользователя: <input type="text" th:field="*{login}" /></p>
-            <p>Пароль: <input type="text" th:field="*{pass}" /></p>
-            <p>e-mail: <input type="text" th:field="*{email}" /></p>
-            <p>Имя: <input type="text" th:field="*{name}" /></p>
-            <p>Фамилия: <input type="text" th:field="*{surname}" /></p>
-            <p>Отчество: <input type="text" th:field="*{secondName}" /></p>
-            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-        </form>
-    </div>
     </body>
-    <footer>
-        <h5> (c) Александр Питасов, 2019г.</h5>
-    </footer>
+
+    <div th:replace="fragments/footer :: copy"></div>
 </html>

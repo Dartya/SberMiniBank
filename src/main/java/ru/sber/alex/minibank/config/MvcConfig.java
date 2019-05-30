@@ -35,7 +35,6 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/");
     }
 
-
     @Value("${db.url}")
     private String dbUrl;
     @Value("${db.username}")
