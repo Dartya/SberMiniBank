@@ -21,7 +21,7 @@ public class ErrorController {
     public String handleIOException(final IOException ioException, final Model model){
         logger.error("IOException", ioException);
         String errorMessage = (ioException != null ? ioException.getMessage() : "Unknown error");
-        model.addAttribute("errorMes", errorMessage);
+        model.addAttribute("errorMessage", errorMessage);
         return "error";
     }
 

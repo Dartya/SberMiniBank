@@ -1,11 +1,17 @@
 package ru.sber.alex.minibank.layers.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.sber.alex.minibank.dto.TransactionDto;
+import ru.sber.alex.minibank.layers.logic.BusinessLogic;
+
 @Controller
 public class ServiceController {
+
+    @Autowired
+    private BusinessLogic businessLogic;
 
     @GetMapping("/")
     public String index() {
@@ -35,8 +41,17 @@ public class ServiceController {
 
     @PostMapping("/push")
     public String pushMoneyPost(@ModelAttribute TransactionDto transaction, Model model){
-
-        return "pushmoney";
+        int result = businessLogic.makePush(transaction);
+        if (result != -1){
+            model.addAttribute("message", "Счет пополнен!");
+            return "successtransaction";
+        }else if (result == -2){
+            model.addAttribute("errorMessage", "Счета с указанным номером не существует.");
+            return "error";
+        }else {
+            model.addAttribute("errorMessage", "Ошибка при внесении средств.");
+            return "error";
+        }
     }
 
     @GetMapping("/pull")
@@ -47,8 +62,13 @@ public class ServiceController {
 
     @PostMapping("/pull")
     public String pullMoneyPost(@ModelAttribute TransactionDto transaction, Model model){
-
-        return "pullmoney";
+        if (businessLogic.makePull(transaction) != -1){
+            model.addAttribute("message", "Средства выведены!");
+            return "successtransaction";
+        }else {
+            model.addAttribute("errorMessage", "Ошибка при выводе средств.");
+            return "error";
+        }
     }
 
     @GetMapping("/transaction")
@@ -59,6 +79,12 @@ public class ServiceController {
 
     @PostMapping("/transaction")
     public String transactionPost(@ModelAttribute TransactionDto transaction, Model model){
-        return "transaction";
+        if (businessLogic.makeTransfer(transaction) != -1){
+            model.addAttribute("message", "Перевод успешно проведен!");
+            return "successtransaction";
+        }else {
+            model.addAttribute("errorMessage", "Ошибка при переводе средств.");
+            return "error";
+        }
     }
 }

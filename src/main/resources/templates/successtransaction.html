@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+    <head th:replace="fragments/head :: common_header(~{::title})">
+        <title>SberMiniBank - Успех</title>
+    </head>
+
+    <div th:replace="fragments/header :: copyheader"></div>
+
+    <body>
+        <div class="mainblock">
+            <div class="container">
+                <h1>Операция проведена успешно!</h1>
+
+                <p th:utext="${#message}">Успех!</p>
+                <a href="/" th:href="@{/}">На главную</a>
+            </div>
+        </div>
+    </body>
+
+    <div th:replace="fragments/footer :: copy"></div>
+</html>

@@ -1,6 +1,7 @@
 package ru.sber.alex.minibank.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +21,7 @@ public class OperationEntity {
     private Integer seconAccountId;
     @Column(name="dict_operation_id")
     private int dictOperationID;
+    private BigDecimal summ;
     private Timestamp timestamp;
 
     @ManyToOne (optional=false, cascade=CascadeType.ALL)
@@ -43,10 +45,11 @@ public class OperationEntity {
     public OperationEntity() {
     }
 
-    public OperationEntity(int accountsId, Integer seconAccountId, int dictOperationID, Timestamp timestamp) {
+    public OperationEntity(int accountsId, Integer seconAccountId, int dictOperationID, BigDecimal summ, Timestamp timestamp) {
         this.accountsId = accountsId;
         this.seconAccountId = seconAccountId;
         this.dictOperationID = dictOperationID;
+        this.summ = summ;
         this.timestamp = timestamp;
     }
 
@@ -66,11 +69,11 @@ public class OperationEntity {
         this.accountsId = accountsId;
     }
 
-    public int getSeconAccountId() {
+    public Integer getSeconAccountId() {
         return seconAccountId;
     }
 
-    public void setSeconAccountId(int seconAccountId) {
+    public void setSeconAccountId(Integer seconAccountId) {
         this.seconAccountId = seconAccountId;
     }
 
@@ -80,6 +83,14 @@ public class OperationEntity {
 
     public void setDictOperationID(int dictOperationID) {
         this.dictOperationID = dictOperationID;
+    }
+
+    public BigDecimal getSumm() {
+        return summ;
+    }
+
+    public void setSumm(BigDecimal summ) {
+        this.summ = summ;
     }
 
     public Timestamp getTimestamp() {
@@ -97,14 +108,19 @@ public class OperationEntity {
         OperationEntity that = (OperationEntity) o;
         return id == that.id &&
                 accountsId == that.accountsId &&
-                seconAccountId == that.seconAccountId &&
                 dictOperationID == that.dictOperationID &&
-                Objects.equals(timestamp, that.timestamp);
+                Objects.equals(seconAccountId, that.seconAccountId) &&
+                Objects.equals(summ, that.summ) &&
+                Objects.equals(timestamp, that.timestamp) &&
+                Objects.equals(accountId, that.accountId) &&
+                Objects.equals(secondAccountId, that.secondAccountId) &&
+                Objects.equals(dictOperation, that.dictOperation) &&
+                Objects.equals(clients, that.clients);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, accountsId, seconAccountId, dictOperationID, timestamp);
+        return Objects.hash(id, accountsId, seconAccountId, dictOperationID, summ, timestamp, accountId, secondAccountId, dictOperation, clients);
     }
 
     @Override
@@ -114,7 +130,12 @@ public class OperationEntity {
                 ", accountsId=" + accountsId +
                 ", seconAccountId=" + seconAccountId +
                 ", dictOperationID=" + dictOperationID +
+                ", summ=" + summ +
                 ", timestamp=" + timestamp +
+                ", accountId=" + accountId +
+                ", secondAccountId=" + secondAccountId +
+                ", dictOperation=" + dictOperation +
+                ", clients=" + clients +
                 '}';
     }
 }

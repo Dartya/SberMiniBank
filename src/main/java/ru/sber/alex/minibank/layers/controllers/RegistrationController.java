@@ -24,7 +24,13 @@ public class RegistrationController {
 
     //push POST from data
     @PostMapping("/registration")
-    public String registrationPost(@ModelAttribute ClientDto client, Model model){
+    public String registrationPost(@ModelAttribute ClientDto client, Model model) {
+        if (client.getName().equals("")) {
+            String error = "Ошибка регистрации пользователя";
+            model.addAttribute("errorMessage", error);
+            return "error";
+        }
+
         String error = "Ошибка регистрации пользователя";
         model.addAttribute("name", error);
         if (businessLogic.registerAcc(client) != -1) {

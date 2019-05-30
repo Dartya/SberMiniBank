@@ -11,15 +11,17 @@
     <body>
         <div class="mainblock">
             <div class="container">
-                <h1>Success!</h1>
-                <p th:text="'id: ' + ${client.login}" />
-                <p th:text="'pass: ' + ${client.pass}" />
-                <p th:text="'e-mail: ' + ${client.email}" />
-                <p th:text="'name: ' + ${client.name}" />
-                <p th:text="'surname: ' + ${client.surname}" />
-                <p th:text="'secondName: ' + ${client.secondName}" />
-                <a href="/registration">Зарегистрировать другого пользователя</a>
-                <a href="/">Назад на главную</a>
+                <h1>Успешная регистрация!</h1>
+                <table>
+                    <tr><p th:text="'Логин: ' + ${client.login}" /></tr>
+                    <tr><p th:text="'pass: ' + ${client.pass}" /></tr>
+                    <tr><p th:text="'e-mail: ' + ${client.email}" /></tr>
+                    <tr><p th:text="'name: ' + ${client.name}" /></tr>
+                    <tr><p th:text="'surname: ' + ${client.surname}" /></tr>
+                    <tr><p th:text="'secondName: ' + ${client.secondName}" /></tr>
+                    <tr><a href="/registration">Зарегистрировать другого пользователя</a></tr>
+                    <tr><a href="/">Назад на главную</a></tr>
+                </table>
             </div>
         </div>
     </body>

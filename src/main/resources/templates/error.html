@@ -12,7 +12,6 @@
             <div class="container">
                 <h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
                 <p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-                <p th:utext="${errorMes}"> error!</p>
                 <a href="/" th:href="@{/}">На главную</a>
             </div>
         </div>

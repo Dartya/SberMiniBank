@@ -29,8 +29,7 @@ public class ClientServiceImpl implements ClientService {
     //потом нужно перенести в сервис пользователей
     @Override
     public ClientEntity getClient(String login) {
-        ClientEntity client = clientRepo.findByLogin(login);
-        return client;
+        return clientRepo.findByLogin(login);
     }
 
     @Transactional
@@ -47,6 +46,7 @@ public class ClientServiceImpl implements ClientService {
                     accountEntity.getId(),
                     null,
                     1,
+                    new BigDecimal(0),
                     new Timestamp(System.currentTimeMillis())
             );
             entityManager.persist(createClientOperationEntity);
