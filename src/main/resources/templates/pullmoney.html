@@ -10,8 +10,29 @@
 
     <body>
         <div class="mainblock">
-            <h2>Вывод средств</h2>
+            <div class="container">
+                <h2>Вывод средств</h2>
 
+                <form action="#" th:action="@{/pullmoney}" th:object="${transaction}" method="post">
+                    <table width="25%" style="margin-top: 30px;">
+                        <tr>
+                            <td align="center"><p>Сумма: </p></td>
+                            <td align="center"><p><input class="input" type="text" th:field="*{summ}" /></p></td>
+                            <td align="left"><p>Руб.</p></td>
+                        </tr>
+                        <tr>
+                            <td align="center"><p>№ счета: </p></td>
+                            <td align="center"><p><input class="input" type="text" th:field="*{accTo}" /></p></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="center"><p><input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Подтвердить" /></p></td>
+                            <td align="center"><p><input class="btn btn-outline-success my-2 my-sm-0" type="reset" value="Сброс" /></p>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </div>
     </body>
 

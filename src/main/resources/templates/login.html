@@ -9,22 +9,27 @@
 
     <body>
         <div class="mainblock">
+            <div class="container">
             <h2>Авторизация</h2>
                 <form th:action="@{/login}" method="post">
                     <table>
                         <tr><td colspan="2">
                             <div th:if="${param.error}">
-                            Неверное имя пользователя или пароль.
-                        </div>
+                                Неверный логин или пароль.
+                            </div>
                             <div th:if="${param.logout}">
                                 Вы успешно завершили сессию.
                             </div>
                         </td></tr>
                         <tr><td><label> Логин: </label></td><td><input class="input" type="text" name="username"/></td></tr>
                         <tr><td><label> Пароль: </label></td><td><input class="input" type="password" name="password"/></td></tr>
-                        <tr><td></td><td><input class="button" type="submit" value="Войти"/></td></tr>
+                        <tr>
+                            <td align="center"><input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Войти"/></td>
+                            <td align="center"><a href="/registration"> <button style="align: center;" class="btn btn-outline-success my-2 my-sm-0" type="button">Регистрация</button> </a></td>
+                        </tr>
                     </table>
                 </form>
+            </div>
         </div>
     </body>
 

@@ -1,33 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
-<header>
-    <div class="cusheader" style="contain: content" th:fragment="copyheader">
+<header th:fragment="copyheader">
+    <div class="cusheader" style="contain: content" >
         <div style="float: left;">
-            <p><a href="/" th:href="@{/}"><img src="/static/image/logo.png" height="100" width="300"/></a></p>
+            <p><a href="/" th:href="@{/}"><img src="/static/image/logo.png" height="125" width="300"/></a></p>
         </div>
         <div style="float: right; padding: 5px">
             <div sec:authorize="isAnonymous()">
 
                 <form th:action="@{/login}" method="post">
                     <table>
-                        <tr><td colspan="2">
-                            <div th:if="${param.error}">
-                                Неверное имя пользователя или пароль.
-                            </div>
-                            <div th:if="${param.logout}">
-                                Вы успешно завершили сессию.
-                            </div>
-                        </td></tr>
                         <tr><td><label> Логин: </label></td><td><input class="input" type="text" name="username"/></td></tr>
                         <tr><td><label> Пароль: </label></td><td><input class="input" type="password" name="password"/></td></tr>
-                        <tr><td></td><td><input class="button" type="submit" value="Войти"/></td></tr>
+                        <td align="center"><input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Войти"/></td>
+                        <td align="center"><a href="/registration"> <button style="align: center;" class="btn btn-outline-success my-2 my-sm-0" type="button">Регистрация</button> </a></td>
                     </table>
                 </form>
                 <!--form action="/login">
                     <button class="float-left submit-button">Войти</button>
                 </form-->
             </div>
-            <div sec:authorize="isAuthenticated()">
+            <!--
+            <div style="float: right" sec:authorize="isAuthenticated()">
                 <table>
                     <tr><td>Добро пожаловать,</td></tr>
                     <tr><td><b>[[${#httpServletRequest.remoteUser}]]</b></td></tr>
@@ -38,6 +32,10 @@
                     </td></tr>
                 </table>
             </div>
+            -->
         </div>
+    </div>
+    <div style="float: bottom;">
+        <div th:replace="fragments/navbar :: nav"></div>
     </div>
 </header>

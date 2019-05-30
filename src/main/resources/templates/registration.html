@@ -9,18 +9,36 @@
 
     <body>
         <div class="mainblock">
-            <h1>Регистрация нового пользователя</h1>
-            <form action="#" th:action="@{/registration}" th:object="${client}" method="post">
-                <table width="25%" cellspacing="0" cellpadding="4">
-                    <tr><td><p>Имя пользователя: </p></td><td><input class="input" type="text" th:field="*{login}" /></td></tr>
-                    <tr><td><p>Пароль: </p></td><td><input class="input" type="text" th:field="*{pass}" /></td></tr>
-                    <tr><td><p>e-mail: </p></td><td><input class="input" type="text" th:field="*{email}" /></td></tr>
-                    <tr><td><p>Имя: </p></td><td><input class="input" type="text" th:field="*{name}" /></td></tr>
-                    <tr><td><p>Фамилия: </p></td><td><input class="input" type="text" th:field="*{surname}" /></td></tr>
-                    <tr><td><p>Отчество: </p></td><td><input class="input" type="text" th:field="*{secondName}" /></td></tr>
-                    <tr><td><p><input class="button" type="submit" value="Подтвердить" /></p></td><td><input class="button" type="reset" value="Сброс" /></td></tr>
-                </table>
-            </form>
+            <div class="container">
+                <h1>Регистрация нового пользователя</h1>
+                <form action="#" th:action="@{/registration}" th:object="${client}" method="post">
+                    <table width="35%" cellspacing="0" cellpadding="4">
+                        <tr>
+                            <td align="right"><p>Имя пользователя: </p></td>
+                            <td align="center"><p><input class="input" type="text" th:field="*{login}" /></p></td>
+                        </tr>
+                        <tr>
+                            <td align="right"><p>Пароль: </p></td>
+                            <td align="center"><p><input class="input" type="text" th:field="*{pass}" /></p></td></tr>
+                        <tr>
+                            <td align="right"><p>E-mail: </p></td>
+                            <td align="center"><p><input class="input" type="text" th:field="*{email}" /></p></td></tr>
+                        <tr>
+                            <td align="right"><p>Имя: </p></td>
+                            <td align="center"><p><input class="input" type="text" th:field="*{name}" /></p></td></tr>
+                        <tr>
+                            <td align="right"><p>Фамилия: </p></td>
+                            <td align="center"><p><input class="input" type="text" th:field="*{surname}" /></p></td></tr>
+                        <tr>
+                            <td align="right"><p>Отчество: </p></td>
+                            <td align="center"><p><input class="input" type="text" th:field="*{secondName}" /></p></td></tr>
+                        <tr>
+                            <td align="center"><p><input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Подтвердить" /></p></td>
+                            <td align="center"><p><input class="btn btn-outline-success my-2 my-sm-0" type="reset" value="Сброс" /></p></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </div>
     </body>
 

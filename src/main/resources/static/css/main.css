@@ -96,11 +96,11 @@ footer{
 }
 
 .button{
-    height:20px;
+    height:30px;
 }
 
 .input{
-    height:20px;
+    height:30px;
 }
 
 .tablex {
@@ -114,7 +114,7 @@ footer{
     border: 1px solid #218f11; /* Рамка вокруг таблицы */
     border-collapse: collapse; /* Убираем двойные линии между ячейками */
 }
-th {
+.th1 {
     background: #137d06; /* Цвет фона */
     border-left: 1px solid #137d06;
     border-bottom: 1px solid #137d06; /* Линия снизу */
