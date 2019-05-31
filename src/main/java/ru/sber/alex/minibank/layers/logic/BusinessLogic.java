@@ -6,12 +6,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.sber.alex.minibank.dto.ClientDto;
 import ru.sber.alex.minibank.dto.TransactionDto;
+import ru.sber.alex.minibank.entities.AccountEntity;
 import ru.sber.alex.minibank.entities.ClientEntity;
 import ru.sber.alex.minibank.entities.OperationEntity;
 import ru.sber.alex.minibank.layers.services.ClientServiceImpl;
 import ru.sber.alex.minibank.layers.services.OperationServiceImpl;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class BusinessLogic {
@@ -77,5 +81,17 @@ public class BusinessLogic {
         operationFrom.setTimestamp(timestamp);
 
         return operationService.transferMoney(operationTo, operationFrom);
+    }
+
+    public Map<ClientEntity, List<OperationEntity>> getClientHistory(String clientLogin){
+        Map<ClientEntity, List<OperationEntity>> map = new HashMap<>();
+
+        ClientEntity client = clientService.getClient(clientLogin);
+        List<AccountEntity> clientAccounts = client.getAccounts();
+        Integer accountId = clientAccounts.get(0).getId();
+        List<OperationEntity> operations = operationService.findByAccountsId(accountId);
+        map.put(client, operations);
+
+        return map;
     }
 }

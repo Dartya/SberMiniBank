@@ -101,6 +101,14 @@ public class ClientEntity {
         this.secondName = secondName;
     }
 
+    public List<AccountEntity> getAccounts() {
+        return accounts;
+    }
+
+    public List<OperationEntity> getOperations() {
+        return operations;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

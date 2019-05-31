@@ -74,4 +74,20 @@ public class AccountEntity {
     public void setDeposit(BigDecimal deposit) {
         this.deposit = deposit;
     }
+
+    public ClientEntity getClient() {
+        return client;
+    }
+
+    public CurrenciesEntity getCurrency() {
+        return currency;
+    }
+
+    public List<OperationEntity> getOperationsAccId() {
+        return operationsAccId;
+    }
+
+    public List<OperationEntity> getOperationsSecAccId() {
+        return operationsSecAccId;
+    }
 }

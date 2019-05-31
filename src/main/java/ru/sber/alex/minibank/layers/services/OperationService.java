@@ -3,7 +3,9 @@ package ru.sber.alex.minibank.layers.services;
 import ru.sber.alex.minibank.entities.AccountEntity;
 import ru.sber.alex.minibank.entities.OperationEntity;
 
+import java.util.List;
+
 public interface OperationService {
 
-    OperationEntity getOperation(int id);
+    List<OperationEntity> findByAccountsId(Integer id);
 }

@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface OperationRepo extends JpaRepository<OperationEntity, Long> {
 
-    List<OperationEntity> findAllByAccountId(int id);
     List<OperationEntity> findAll();
-    OperationEntity findByAccountsId(int id);
+    List<OperationEntity> findByAccountsId(Integer id);
 }

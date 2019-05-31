@@ -1,11 +1,19 @@
 package ru.sber.alex.minibank.layers.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.sber.alex.minibank.dto.TransactionDto;
+import ru.sber.alex.minibank.entities.ClientEntity;
+import ru.sber.alex.minibank.entities.OperationEntity;
 import ru.sber.alex.minibank.layers.logic.BusinessLogic;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ServiceController {
@@ -29,8 +37,44 @@ public class ServiceController {
     }
 
     @GetMapping("/personaloffice")
-    public String persOffice(){
-        return "personaloffice";
+    public String persOffice(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        Map<ClientEntity, List<OperationEntity>> map = businessLogic.getClientHistory(currentPrincipalName);
+
+        ClientEntity clientEntity;
+        List<OperationEntity> history;
+
+        try {
+            Iterator<Map.Entry<ClientEntity, List<OperationEntity>>> itr = map.entrySet().iterator();
+            Map.Entry<ClientEntity, List<OperationEntity>> entry = itr.next();
+
+            clientEntity = entry.getKey();
+            String name = clientEntity.getName();
+            String surname = clientEntity.getSurname();
+            String secondName = clientEntity.getSecondName();
+            Double deposit = clientEntity.getAccounts().get(0).getDeposit().doubleValue();
+            String currency = clientEntity.getAccounts().get(0).getCurrency().getCurrencyCode();
+
+            history = entry.getValue();
+            history.forEach(System.out::println);
+
+            model.addAttribute("name", name);
+            model.addAttribute("surname", surname);
+            model.addAttribute("secondName", secondName);
+            model.addAttribute("deposit", deposit);
+            model.addAttribute("currency", currency);
+            model.addAttribute("history", history);
+
+            System.out.println("name = "+name+", surname = "+surname+", secondName = "+secondName+", deposit = "+deposit+", currency = "+currency);  //для проверки
+            return "personaloffice";
+
+        }catch (ClassCastException | NullPointerException e){
+            e.printStackTrace();
+            return "error";
+        }
+
     }
 
     @GetMapping("/push")

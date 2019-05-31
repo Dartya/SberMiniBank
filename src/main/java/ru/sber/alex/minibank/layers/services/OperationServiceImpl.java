@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.sber.alex.minibank.entities.AccountEntity;
 import ru.sber.alex.minibank.entities.OperationEntity;
-import ru.sber.alex.minibank.repository.AccountRepo;
 import ru.sber.alex.minibank.repository.OperationRepo;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Slf4j
@@ -26,15 +26,12 @@ public class OperationServiceImpl implements OperationService {
     @Autowired
     private AccountServiceImpl accountService;
 
-    public AccountEntity getAccount(int id){
+    private AccountEntity getAccount(int id){
         return accountService.getById(id);
     }
 
-    @Autowired
-    private AccountRepo accountRepo;
-
     @Override
-    public OperationEntity getOperation(int id) {
+    public List<OperationEntity> findByAccountsId(Integer id){
         return operationRepo.findByAccountsId(id);
     }
 
@@ -85,10 +82,12 @@ public class OperationServiceImpl implements OperationService {
             if (accountFrom.getDeposit().subtract(operationFrom.getSumm()).doubleValue() >= 0.00) {
                 accountFrom.setDeposit(accountFrom.getDeposit().subtract(operationFrom.getSumm()));
                 accountTo.setDeposit(accountTo.getDeposit().add(operationFrom.getSumm()));
-                entityManager.merge(accountFrom);
-                entityManager.persist(operationFrom);
-                entityManager.merge(accountTo);
-                entityManager.persist(operationTo);
+
+                entityManager.merge(accountFrom);       //апдейт счета адресата
+                entityManager.persist(operationFrom);   //запись о переводе со стороны адресата
+
+                entityManager.merge(accountTo);         //апдейт счета инициатора
+                entityManager.persist(operationTo);     //запись о переводе со стороны инициатора
 
                 return 1;
             } else return ERROR;

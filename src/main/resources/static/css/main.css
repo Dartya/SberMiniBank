@@ -108,7 +108,7 @@ footer{
     margin-right: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 80%;
+    width: 90%;
     padding: 5px; /* Поля вокруг содержимого ячейки */
     background: #ddffda; /* Цвет фона нечетных строк */
     border: 1px solid #218f11; /* Рамка вокруг таблицы */
