@@ -45,9 +45,6 @@ public class ServiceController {
         if (result != -1){
             model.addAttribute("message", "Счет пополнен!");
             return "successtransaction";
-        }else if (result == -2){
-            model.addAttribute("errorMessage", "Счета с указанным номером не существует.");
-            return "error";
         }else {
             model.addAttribute("errorMessage", "Ошибка при внесении средств.");
             return "error";

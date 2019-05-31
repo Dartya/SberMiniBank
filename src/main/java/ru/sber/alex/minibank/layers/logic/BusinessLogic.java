@@ -1,7 +1,6 @@
 package ru.sber.alex.minibank.layers.logic;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.Operation;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,7 +28,6 @@ public class BusinessLogic {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
     public int registerAcc(ClientDto client){
         ClientEntity clientEntity = new ClientEntity();
         clientEntity.setLogin(client.getLogin());
@@ -45,6 +43,7 @@ public class BusinessLogic {
         final OperationEntity operationEntity = new OperationEntity();
         operationEntity.setAccountsId(transaction.getAccFrom());
         operationEntity.setDictOperationID(2);
+        operationEntity.setSumm(transaction.getSumm());
         operationEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
         return operationService.pushMoney(operationEntity);
     }
@@ -53,23 +52,28 @@ public class BusinessLogic {
         final OperationEntity operationEntity = new OperationEntity();
         operationEntity.setAccountsId(transaction.getAccFrom());
         operationEntity.setDictOperationID(3);
+        operationEntity.setSumm(transaction.getSumm());
         operationEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
         return operationService.pullMoney(operationEntity);
     }
 
     public int makeTransfer(TransactionDto transaction){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
         //операция со стороны инициатора перевода
         final OperationEntity operationTo = new OperationEntity();
         operationTo.setAccountsId(transaction.getAccFrom());        //инициатор
         operationTo.setSeconAccountId(transaction.getAccTo());      //адресат
         operationTo.setDictOperationID(4);                          //перевод адресату
+        operationTo.setSumm(transaction.getSumm());
         operationTo.setTimestamp(timestamp);
+
         //операция со стороны адресата перевода
         final OperationEntity operationFrom = new OperationEntity();
         operationFrom.setAccountsId(transaction.getAccTo());        //адресат
         operationFrom.setSeconAccountId(transaction.getAccFrom());  //инициатор
         operationFrom.setDictOperationID(5);                        //перевод от инициатора
+        operationFrom.setSumm(transaction.getSumm());
         operationFrom.setTimestamp(timestamp);
 
         return operationService.transferMoney(operationTo, operationFrom);

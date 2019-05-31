@@ -13,12 +13,12 @@
             <div class="container">
                 <h1>Успешная регистрация!</h1>
                 <table>
-                    <tr><p th:text="'Логин: ' + ${client.login}" /></tr>
-                    <tr><p th:text="'pass: ' + ${client.pass}" /></tr>
-                    <tr><p th:text="'e-mail: ' + ${client.email}" /></tr>
-                    <tr><p th:text="'name: ' + ${client.name}" /></tr>
-                    <tr><p th:text="'surname: ' + ${client.surname}" /></tr>
-                    <tr><p th:text="'secondName: ' + ${client.secondName}" /></tr>
+                    <tr><td><p>Логин:</p></td> <td><p th:text="${client.login}" /></td></tr>
+                    <tr><td><p>Пароль:</p></td> <td><p th:text="${client.pass}" /></td></tr>
+                    <tr><td><p>E-mail:</p></td> <td><p th:text="${client.email}" /></td></tr>
+                    <tr><td><p>Имя:</p></td><p th:text="${client.name}" /></td></tr>
+                    <tr><td><p>Фамилия:</p></td><p th:text="${client.surname}" /></td></tr>
+                    <tr><td><p>Отчество:</p></td><p th:text="${client.secondName}" /></td></tr>
                     <tr><a href="/registration">Зарегистрировать другого пользователя</a></tr>
                     <tr><a href="/">Назад на главную</a></tr>
                 </table>
