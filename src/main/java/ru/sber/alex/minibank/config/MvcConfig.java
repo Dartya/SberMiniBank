@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import ru.sber.alex.minibank.layers.services.ClientDetailServiceImpl;
+import ru.sber.alex.minibank.layers.services.jpaservices.ClientDetailServiceImpl;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;

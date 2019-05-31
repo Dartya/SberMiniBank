@@ -9,8 +9,10 @@ import ru.sber.alex.minibank.dto.TransactionDto;
 import ru.sber.alex.minibank.entities.AccountEntity;
 import ru.sber.alex.minibank.entities.ClientEntity;
 import ru.sber.alex.minibank.entities.OperationEntity;
-import ru.sber.alex.minibank.layers.services.ClientServiceImpl;
-import ru.sber.alex.minibank.layers.services.OperationServiceImpl;
+import ru.sber.alex.minibank.layers.services.commonservices.MailService;
+import ru.sber.alex.minibank.layers.services.jpaservices.AccountService;
+import ru.sber.alex.minibank.layers.services.jpaservices.ClientServiceImpl;
+import ru.sber.alex.minibank.layers.services.jpaservices.OperationServiceImpl;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -31,6 +33,12 @@ public class BusinessLogic {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private MailService mailService;
 
     public int registerAcc(ClientDto client){
         ClientEntity clientEntity = new ClientEntity();
@@ -80,7 +88,20 @@ public class BusinessLogic {
         operationFrom.setSumm(transaction.getSumm());
         operationFrom.setTimestamp(timestamp);
 
-        return operationService.transferMoney(operationTo, operationFrom);
+        int result = operationService.transferMoney(operationTo, operationFrom);
+        if (result != -1){
+            AccountEntity accountEntity = accountService.getById(transaction.getAccTo());
+
+            final String message = "На Ваш счет №"+transaction.getAccTo()+
+                    " поступил перевод средств со счета №"
+                    +transaction.getAccFrom()+" на сумму "
+                    +transaction.getSumm()+".\n\nВаш СбербМиниБанк.";
+
+            mailService.send(accountEntity.getClient().getEmail(), "Перевод средств", message);
+            return 1;
+        }
+
+        return -1;
     }
 
     public Map<ClientEntity, List<OperationEntity>> getClientHistory(String clientLogin){

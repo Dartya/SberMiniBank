@@ -1,4 +1,4 @@
-package ru.sber.alex.minibank.layers.services;
+package ru.sber.alex.minibank.layers.services.jpaservices;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
