@@ -14,26 +14,29 @@
                 <div align="right">
                     <table class="tablex" style="width: 50%;" align="right">
                         <tr class="th1">
-                            <td colspan="4"><p><b>Информация о клиенте</b></p></td>
+                            <td colspan="4"><p><h5>Информация о клиенте</h5></p></td>
                         </tr>
                         <tr class="even">
-                            <td align="left"><p><b>Фамилия, Имя, Отчество: </b></p></td><td><p th:utext="${name}">Name</p></td><td><p th:utext="${surname}">Name</p></td><td><p th:utext="${secondName}">Name</p></td>
+                            <td align="left"><p><b>Фамилия, Имя, Отчество: </b></p></td><td><p th:utext="${surname}">Name</p></td><td><p th:utext="${name}">Name</p></td><td><p th:utext="${secondName}">Name</p></td>
                         </tr>
                         <tr class="green2">
-                            <td align="left"><p><b>Баланс счета: </b></p></td><td><p th:utext="${deposit}">Name</p></td><td><p th:utext="${currency}">Name</p></td><td/>
+                            <td align="left"><p><b>Номер счета и баланс: </b></p></td><td><p th:utext="'№' + ${history.get(0).getAccountsId()}"></p></td><td><p th:utext="${deposit}">Name</p></td><td><p th:utext="${currency}">Name</p></td>
                         </tr>
                     </table>
                 </div>
                 <div align="bottom">
                     <table class="tablex">
                         <tr>
-                            <th class="th1"><p><b>№ операции</b></p></th>
-                            <th class="th1"><p><b>Операция</b></p></th>
-                            <th class="th1"><p><b>№ счета</b></p></th>
-                            <th class="th1"><p><b>Сумма</b></p></th>
-                            <th class="th1"><p><b>Валюта</b></p></th>
-                            <th class="th1"><p><b>От кого/кому</b></p></th>
-                            <th class="th1"><p><b>Дата, время</b></p></th>
+                            <th class="th1" colspan="7"><p><h5>История операций</h5></p></th>
+                        </tr>
+                        <tr>
+                            <th class="even"><p><b>№ операции</b></p></th>
+                            <th class="even"><p><b>Операция</b></p></th>
+                            <th class="even"><p><b>№ счета</b></p></th>
+                            <th class="even"><p><b>Сумма</b></p></th>
+                            <th class="even"><p><b>Валюта</b></p></th>
+                            <th class="even"><p><b>От кого/кому</b></p></th>
+                            <th class="even"><p><b>Дата, время</b></p></th>
                         </tr>
                         <!--
                         <tr class="green2">
@@ -57,11 +60,11 @@
                         -->
                         <tr th:each="history, itemStat : *{history}">
                             <td class="la"><p th:utext="${history.getId()}"></p></td>
-                            <td class="la"><p th:utext="${history.getDictOperationID()}"></p></td>
+                            <td class="la"><p th:utext="${history.getDictOperation().getOperation()}"></p></td>
                             <td class="la"><p th:utext="${history.getAccountsId()}"></p></td>
                             <td class="la"><p th:utext="${history.getSumm()}"></p></td>
-                            <td class="la"><p th:utext="${currency}"> [[]]</p></td>
-                            <td class="la"><p th:utext="${history.getSeconAccountId()}">---</p></td>
+                            <td class="la"><p th:utext="${currency}"></p></td>
+                            <td class="la"><p th:utext="${history.getSeconAccountId()}"></p></td>
                             <td class="la"><p th:utext="${history.getTimestamp()}"></p></td>
                         </tr>
                     </table>

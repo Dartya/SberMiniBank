@@ -101,6 +101,22 @@ public class OperationEntity {
         this.timestamp = timestamp;
     }
 
+    public AccountEntity getAccountId() {
+        return accountId;
+    }
+
+    public AccountEntity getSecondAccountId() {
+        return secondAccountId;
+    }
+
+    public DictOperationsEntity getDictOperation() {
+        return dictOperation;
+    }
+
+    public List<OperationEntity> getClients() {
+        return clients;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
