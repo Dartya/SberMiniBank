@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class ClientDto {
 
+    private int id;
     private String login;
     private String pass;
     private String email;

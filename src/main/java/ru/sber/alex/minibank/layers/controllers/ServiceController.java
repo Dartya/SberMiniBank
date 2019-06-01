@@ -21,6 +21,11 @@ public class ServiceController {
     @Autowired
     private BusinessLogic businessLogic;
 
+    private String getCurrentLogin(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+
     @GetMapping("/")
     public String index() {
         return "index";
@@ -38,10 +43,8 @@ public class ServiceController {
 
     @GetMapping("/personaloffice")
     public String persOffice(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
 
-        Map<ClientEntity, List<OperationEntity>> map = businessLogic.getClientHistory(currentPrincipalName);
+        Map<ClientEntity, List<OperationEntity>> map = businessLogic.getClientHistory(getCurrentLogin());
 
         ClientEntity clientEntity;
         List<OperationEntity> history;
@@ -85,6 +88,7 @@ public class ServiceController {
 
     @PostMapping("/push")
     public String pushMoneyPost(@ModelAttribute TransactionDto transaction, Model model){
+        transaction.setLogin(getCurrentLogin());
         int result = businessLogic.makePush(transaction);
         if (result != -1){
             model.addAttribute("message", "Счет пополнен!");
@@ -103,6 +107,7 @@ public class ServiceController {
 
     @PostMapping("/pull")
     public String pullMoneyPost(@ModelAttribute TransactionDto transaction, Model model){
+        transaction.setLogin(getCurrentLogin());
         if (businessLogic.makePull(transaction) != -1){
             model.addAttribute("message", "Средства выведены!");
             return "successtransaction";
@@ -120,6 +125,7 @@ public class ServiceController {
 
     @PostMapping("/transaction")
     public String transactionPost(@ModelAttribute TransactionDto transaction, Model model){
+        transaction.setLogin(getCurrentLogin());
         if (businessLogic.makeTransfer(transaction) != -1){
             model.addAttribute("message", "Перевод успешно проведен!");
             return "successtransaction";

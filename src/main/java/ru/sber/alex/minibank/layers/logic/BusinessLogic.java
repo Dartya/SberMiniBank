@@ -57,7 +57,7 @@ public class BusinessLogic {
         operationEntity.setDictOperationID(2);
         operationEntity.setSumm(transaction.getSumm());
         operationEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        return operationService.pushMoney(operationEntity);
+        return operationService.pushMoney(operationEntity, transaction.getLogin());
     }
 
     public int makePull(TransactionDto transaction){
@@ -66,7 +66,7 @@ public class BusinessLogic {
         operationEntity.setDictOperationID(3);
         operationEntity.setSumm(transaction.getSumm());
         operationEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        return operationService.pullMoney(operationEntity);
+        return operationService.pullMoney(operationEntity, transaction.getLogin());
     }
 
     public int makeTransfer(TransactionDto transaction){
@@ -88,7 +88,7 @@ public class BusinessLogic {
         operationFrom.setSumm(transaction.getSumm());
         operationFrom.setTimestamp(timestamp);
 
-        int result = operationService.transferMoney(operationTo, operationFrom);
+        int result = operationService.transferMoney(operationTo, operationFrom, transaction.getLogin());
         if (result != -1){
             AccountEntity accountEntity = accountService.getById(transaction.getAccTo());
 
@@ -100,7 +100,6 @@ public class BusinessLogic {
             mailService.send(accountEntity.getClient().getEmail(), "Перевод средств", message);
             return 1;
         }
-
         return -1;
     }
 

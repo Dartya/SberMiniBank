@@ -26,11 +26,33 @@ public class ClientEntity {
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     private List<AccountEntity> accounts;
 
-    @ManyToMany
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable (name="logs",
-            joinColumns=@JoinColumn (name="clients_id"),
+            joinColumns=@JoinColumn(name="clients_id"),
             inverseJoinColumns=@JoinColumn(name="operation_id"))
-    private List<OperationEntity> operations;
+    private List<OperationEntity> operations = new ArrayList<>();
+
+    public List<OperationEntity> getOperations(){
+        return operations;
+    }
+
+    public void setOperations(List<OperationEntity> operations) {
+        this.operations = operations;
+    }
+
+    public void addClient(OperationEntity operation) {
+        operations.add(operation);
+        operation.getClients().add(this);
+    }
+
+    public void removeClient(OperationEntity operation) {
+        operations.remove(operation);
+        operation.getClients().remove(this);
+    }
 
     public ClientEntity() {
     }
@@ -103,10 +125,6 @@ public class ClientEntity {
 
     public List<AccountEntity> getAccounts() {
         return accounts;
-    }
-
-    public List<OperationEntity> getOperations() {
-        return operations;
     }
 
     @Override

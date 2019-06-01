@@ -38,6 +38,7 @@ public class ClientServiceImpl implements ClientService {
             entityManager.flush();
             int newClientId = client.getId();
             System.out.println("id of an added client = "+newClientId);
+
             final AccountEntity accountEntity = new AccountEntity(newClientId, 1, new BigDecimal(0));
             entityManager.persist(accountEntity);
             entityManager.flush();
@@ -48,6 +49,8 @@ public class ClientServiceImpl implements ClientService {
                     new BigDecimal(0),
                     new Timestamp(System.currentTimeMillis())
             );
+
+            createClientOperationEntity.addClient(client);
             entityManager.persist(createClientOperationEntity);
             entityManager.flush();
             return 1;

@@ -16,11 +16,10 @@
                     <tr><td><p>Логин:</p></td> <td><p th:text="${client.login}" /></td></tr>
                     <tr><td><p>Пароль:</p></td> <td><p th:text="${client.pass}" /></td></tr>
                     <tr><td><p>E-mail:</p></td> <td><p th:text="${client.email}" /></td></tr>
-                    <tr><td><p>Имя:</p></td><p th:text="${client.name}" /></td></tr>
-                    <tr><td><p>Фамилия:</p></td><p th:text="${client.surname}" /></td></tr>
-                    <tr><td><p>Отчество:</p></td><p th:text="${client.secondName}" /></td></tr>
-                    <tr><a href="/registration">Зарегистрировать другого пользователя</a></tr>
-                    <tr><a href="/">Назад на главную</a></tr>
+                    <tr><td><p>Имя:</p></td> <td><p th:text="${client.name}" /></td></tr>
+                    <tr><td><p>Фамилия:</p></td> <td><p th:text="${client.surname}" /></td></tr>
+                    <tr><td><p>Отчество:</p></td> <td><p th:text="${client.secondName}" /></td></tr>
+                    <tr><td colspan="2"><a href="/registration"> <button style="align: center;" class="btn btn-outline-success my-2 my-sm-0" type="button">Зарегистрировать другого клиента</button> </a></td></tr>
                 </table>
             </div>
         </div>

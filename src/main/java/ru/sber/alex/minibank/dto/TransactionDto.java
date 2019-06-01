@@ -10,6 +10,8 @@ public class TransactionDto {
     private int accTo;
     private int operationCode;
 
+    private String login;
+
     public TransactionDto() {
     }
 
@@ -52,6 +54,14 @@ public class TransactionDto {
         this.operationCode = operationCode;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,12 +70,13 @@ public class TransactionDto {
         return accFrom == that.accFrom &&
                 accTo == that.accTo &&
                 operationCode == that.operationCode &&
-                Objects.equals(summ, that.summ);
+                Objects.equals(summ, that.summ) &&
+                Objects.equals(login, that.login);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accFrom, summ, accTo, operationCode);
+        return Objects.hash(accFrom, summ, accTo, operationCode, login);
     }
 
     @Override
@@ -75,6 +86,7 @@ public class TransactionDto {
                 ", summ=" + summ +
                 ", accTo=" + accTo +
                 ", operationCode=" + operationCode +
+                ", login='" + login + '\'' +
                 '}';
     }
 }

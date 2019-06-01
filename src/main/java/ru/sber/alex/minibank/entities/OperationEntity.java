@@ -3,10 +3,7 @@ package ru.sber.alex.minibank.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="operations")
@@ -36,11 +33,34 @@ public class OperationEntity {
     @JoinColumn(name="dict_operation_id", insertable = false, updatable = false)
     private DictOperationsEntity dictOperation;
 
-    @ManyToMany
-    @JoinTable (name="logs",
-            joinColumns=@JoinColumn (name="operation_id"),
-            inverseJoinColumns=@JoinColumn(name="clients_id"))
-    private List<OperationEntity> clients;
+//    Аннотации в комменте не проверялись, но пускай тут останутся для примера
+//    @ManyToMany(cascade = {
+//            CascadeType.PERSIST,
+//            CascadeType.MERGE
+//    })
+//    @JoinTable (name="logs",
+//            joinColumns=@JoinColumn (name="operation_id"),
+//            inverseJoinColumns=@JoinColumn(name="clients_id"))
+    @ManyToMany(mappedBy = "operations")
+    private List<ClientEntity> clients = new ArrayList<>();
+
+    public List<ClientEntity> getClients(){
+        return clients;
+    }
+
+    public void setClients(List<ClientEntity> operations) {
+        this.clients = operations;
+    }
+
+    public void addClient(ClientEntity client) {
+        clients.add(client);
+        client.getOperations().add(this);
+    }
+
+    public void removeClient(ClientEntity client) {
+        clients.remove(client);
+        client.getOperations().remove(this);
+    }
 
     public OperationEntity() {
     }
@@ -111,10 +131,6 @@ public class OperationEntity {
 
     public DictOperationsEntity getDictOperation() {
         return dictOperation;
-    }
-
-    public List<OperationEntity> getClients() {
-        return clients;
     }
 
     @Override
