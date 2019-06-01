@@ -75,6 +75,22 @@ public class AccountEntity {
         this.deposit = deposit;
     }
 
+    public void setClient(ClientEntity client) {
+        this.client = client;
+    }
+
+    public void setCurrency(CurrenciesEntity currency) {
+        this.currency = currency;
+    }
+
+    public void setOperationsAccId(List<OperationEntity> operationsAccId) {
+        this.operationsAccId = operationsAccId;
+    }
+
+    public void setOperationsSecAccId(List<OperationEntity> operationsSecAccId) {
+        this.operationsSecAccId = operationsSecAccId;
+    }
+
     public ClientEntity getClient() {
         return client;
     }

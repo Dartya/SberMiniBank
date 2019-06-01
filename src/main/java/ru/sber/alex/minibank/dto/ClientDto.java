@@ -1,5 +1,6 @@
 package ru.sber.alex.minibank.dto;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ClientDto {
@@ -12,6 +13,8 @@ public class ClientDto {
     private String surname;
     private String secondName;
 
+    private List<AccountDto> accountDtos;
+
     public ClientDto() {
     }
 
@@ -22,6 +25,14 @@ public class ClientDto {
         this.name = name;
         this.surname = surname;
         this.secondName = secondName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -72,33 +83,45 @@ public class ClientDto {
         this.secondName = secondName;
     }
 
+    public List<AccountDto> getAccountDtos() {
+        return accountDtos;
+    }
+
+    public void setAccountDtos(List<AccountDto> accountDtos) {
+        this.accountDtos = accountDtos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClientDto clientDto = (ClientDto) o;
-        return Objects.equals(login, clientDto.login) &&
+        return id == clientDto.id &&
+                Objects.equals(login, clientDto.login) &&
                 Objects.equals(pass, clientDto.pass) &&
                 Objects.equals(email, clientDto.email) &&
                 Objects.equals(name, clientDto.name) &&
                 Objects.equals(surname, clientDto.surname) &&
-                Objects.equals(secondName, clientDto.secondName);
+                Objects.equals(secondName, clientDto.secondName) &&
+                Objects.equals(accountDtos, clientDto.accountDtos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, pass, email, name, surname, secondName);
+        return Objects.hash(id, login, pass, email, name, surname, secondName, accountDtos);
     }
 
     @Override
     public String toString() {
         return "ClientDto{" +
-                "login='" + login + '\'' +
+                "id=" + id +
+                ", login='" + login + '\'' +
                 ", pass='" + pass + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", secondName='" + secondName + '\'' +
+                ", accountDtos=" + accountDtos +
                 '}';
     }
 }

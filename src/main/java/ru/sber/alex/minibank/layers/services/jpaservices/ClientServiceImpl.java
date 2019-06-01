@@ -12,12 +12,16 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 @Slf4j
 public class ClientServiceImpl implements ClientService {
 
     private final static int ERROR = -1;
+    private final static int OK = 1;
 
     @Autowired
     private EntityManager entityManager;
@@ -25,12 +29,16 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepo clientRepo;
 
+    @Autowired
+    private OperationService operationService;
+
     //потом нужно перенести в сервис пользователей
     @Override
     public ClientEntity getClient(String login) {
         return clientRepo.findByLogin(login);
     }
 
+    //todo заменить Entity на Dto, затем трансформировать на входе, далее по той же логике
     @Transactional
     public int addClient(ClientEntity client){
         try{
@@ -53,10 +61,26 @@ public class ClientServiceImpl implements ClientService {
             createClientOperationEntity.addClient(client);
             entityManager.persist(createClientOperationEntity);
             entityManager.flush();
-            return 1;
+            return OK;
         } catch (Exception e) {
             e.printStackTrace();
             return ERROR;
         }
+    }
+
+    //todo заменить Entity на Dto, затем трансформировать на входе, далее по той же логике
+    public  Map<ClientEntity, List<OperationEntity>> getClientOperationsMap(String clientLogin){
+        Map<ClientEntity, List<OperationEntity>> map = new HashMap<>();
+
+        ClientEntity client = getClient(clientLogin);
+        List<AccountEntity> clientAccounts = client.getAccounts();
+
+        for (int i = 0; i < clientAccounts.size(); i++) {
+            Integer accountId = clientAccounts.get(i).getId();
+            List<OperationEntity> operations = operationService.findByAccountsId(accountId);
+            map.put(client, operations);
+        }
+
+        return map;
     }
 }

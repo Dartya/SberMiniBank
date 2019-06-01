@@ -23,6 +23,4 @@ public class AccountServiceImpl implements AccountService{
     public AccountEntity getById(int id){
         return accountRepo.getById(id);
     }
-
-
 }

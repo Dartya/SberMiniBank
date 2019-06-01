@@ -1,8 +1,6 @@
 package ru.sber.alex.minibank.dto;
 
-import ru.sber.alex.minibank.entities.ClientEntity;
 import ru.sber.alex.minibank.entities.CurrenciesEntity;
-import ru.sber.alex.minibank.entities.OperationEntity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,21 +13,19 @@ public class AccountDto {
     private int currencyID;
     private BigDecimal deposit;
 
-    private ClientEntity client;
+    private ClientDto client;
     private CurrenciesEntity currency;
-    private List<OperationEntity> operationsAccId;
-    private List<OperationEntity> operationsSecAccId;
+    private List<OperationDto> operationsAccId;
+    private List<OperationDto> operationsSecAccId;
 
     public AccountDto() {
     }
 
-    public AccountDto(int id, int clientId, int currencyID, BigDecimal deposit, ClientEntity client, CurrenciesEntity currency) {
+    public AccountDto(int id, int clientId, int currencyID, BigDecimal deposit) {
         this.id = id;
         this.clientId = clientId;
         this.currencyID = currencyID;
         this.deposit = deposit;
-        this.client = client;
-        this.currency = currency;
     }
 
     public int getId() {
@@ -64,11 +60,11 @@ public class AccountDto {
         this.deposit = deposit;
     }
 
-    public ClientEntity getClient() {
+    public ClientDto getClient() {
         return client;
     }
 
-    public void setClient(ClientEntity client) {
+    public void setClient(ClientDto client) {
         this.client = client;
     }
 
@@ -80,19 +76,19 @@ public class AccountDto {
         this.currency = currency;
     }
 
-    public List<OperationEntity> getOperationsAccId() {
+    public List<OperationDto> getOperationsAccId() {
         return operationsAccId;
     }
 
-    public void setOperationsAccId(List<OperationEntity> operationsAccId) {
+    public void setOperationsAccId(List<OperationDto> operationsAccId) {
         this.operationsAccId = operationsAccId;
     }
 
-    public List<OperationEntity> getOperationsSecAccId() {
+    public List<OperationDto> getOperationsSecAccId() {
         return operationsSecAccId;
     }
 
-    public void setOperationsSecAccId(List<OperationEntity> operationsSecAccId) {
+    public void setOperationsSecAccId(List<OperationDto> operationsSecAccId) {
         this.operationsSecAccId = operationsSecAccId;
     }
 

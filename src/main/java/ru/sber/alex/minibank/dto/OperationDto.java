@@ -1,6 +1,8 @@
 package ru.sber.alex.minibank.dto;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 public class OperationDto {
@@ -9,16 +11,20 @@ public class OperationDto {
     private int accountId;
     private int secondAccId;
     private int operationCode;
+    private BigDecimal summ;
     private Timestamp timestamp;
+
+    private List<ClientDto> clientDtos;
 
     public OperationDto() {
     }
 
-    public OperationDto(int id, int accountId, int secondAccId, int operationCode, Timestamp timestamp) {
+    public OperationDto(int id, int accountId, int secondAccId, int operationCode, BigDecimal summ, Timestamp timestamp) {
         this.id = id;
         this.accountId = accountId;
         this.secondAccId = secondAccId;
         this.operationCode = operationCode;
+        this.summ = summ;
         this.timestamp = timestamp;
     }
 
@@ -62,6 +68,22 @@ public class OperationDto {
         this.timestamp = timestamp;
     }
 
+    public List<ClientDto> getClientDtos() {
+        return clientDtos;
+    }
+
+    public void setClientDtos(List<ClientDto> clientDtos) {
+        this.clientDtos = clientDtos;
+    }
+
+    public BigDecimal getSumm() {
+        return summ;
+    }
+
+    public void setSumm(BigDecimal summ) {
+        this.summ = summ;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,12 +93,14 @@ public class OperationDto {
                 accountId == that.accountId &&
                 secondAccId == that.secondAccId &&
                 operationCode == that.operationCode &&
-                Objects.equals(timestamp, that.timestamp);
+                Objects.equals(summ, that.summ) &&
+                Objects.equals(timestamp, that.timestamp) &&
+                Objects.equals(clientDtos, that.clientDtos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, accountId, secondAccId, operationCode, timestamp);
+        return Objects.hash(id, accountId, secondAccId, operationCode, summ, timestamp, clientDtos);
     }
 
     @Override
@@ -86,7 +110,9 @@ public class OperationDto {
                 ", accountId=" + accountId +
                 ", secondAccId=" + secondAccId +
                 ", operationCode=" + operationCode +
+                ", summ=" + summ +
                 ", timestamp=" + timestamp +
+                ", clientDtos=" + clientDtos +
                 '}';
     }
 }

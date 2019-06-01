@@ -48,6 +48,8 @@ public class BusinessLogic {
         clientEntity.setName(client.getName());
         clientEntity.setSurname(client.getSurname());
         clientEntity.setSecondName(client.getSecondName());
+
+        //todo трнасформировать Entity в Dto
         return clientService.addClient(clientEntity);
     }
 
@@ -57,6 +59,8 @@ public class BusinessLogic {
         operationEntity.setDictOperationID(2);
         operationEntity.setSumm(transaction.getSumm());
         operationEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+        //todo трнасформировать Entity в Dto
         return operationService.pushMoney(operationEntity, transaction.getLogin());
     }
 
@@ -66,6 +70,8 @@ public class BusinessLogic {
         operationEntity.setDictOperationID(3);
         operationEntity.setSumm(transaction.getSumm());
         operationEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+        //todo трнасформировать Entity в Dto
         return operationService.pullMoney(operationEntity, transaction.getLogin());
     }
 
@@ -88,7 +94,9 @@ public class BusinessLogic {
         operationFrom.setSumm(transaction.getSumm());
         operationFrom.setTimestamp(timestamp);
 
+        //todo трнасформировать Entity в Dto
         int result = operationService.transferMoney(operationTo, operationFrom, transaction.getLogin());
+
         if (result != -1){
             AccountEntity accountEntity = accountService.getById(transaction.getAccTo());
 
@@ -103,15 +111,9 @@ public class BusinessLogic {
         return -1;
     }
 
+    //todo заменить Entity на Dto
     public Map<ClientEntity, List<OperationEntity>> getClientHistory(String clientLogin){
-        Map<ClientEntity, List<OperationEntity>> map = new HashMap<>();
 
-        ClientEntity client = clientService.getClient(clientLogin);
-        List<AccountEntity> clientAccounts = client.getAccounts();
-        Integer accountId = clientAccounts.get(0).getId();
-        List<OperationEntity> operations = operationService.findByAccountsId(accountId);
-        map.put(client, operations);
-
-        return map;
+        return clientService.getClientOperationsMap(clientLogin);
     }
 }

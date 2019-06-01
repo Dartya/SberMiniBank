@@ -17,6 +17,7 @@ import java.util.List;
 public class OperationServiceImpl implements OperationService {
 
     private final static int ERROR = -1;
+    private final static int OK = 1;
 
     @Autowired
     private EntityManager entityManager;
@@ -25,17 +26,10 @@ public class OperationServiceImpl implements OperationService {
     private OperationRepo operationRepo;
 
     @Autowired
-    private ClientService clientService;
-
-    @Autowired
     private AccountServiceImpl accountService;
 
     private AccountEntity getAccount(int id){
         return accountService.getById(id);
-    }
-
-    private ClientEntity getClient(String login){
-        return clientService.getClient(login);
     }
 
     @Override
@@ -44,6 +38,7 @@ public class OperationServiceImpl implements OperationService {
     }
 
     //достаем аккаунт из репозитория, прибавляем сумму из операции, сохраняем аккаунт и операцию
+    //todo заменить Entity на Dto, затем трансформировать на входе, далее по той же логике
     @Transactional
     public int pushMoney(OperationEntity operationEntity, String login){
         try {
@@ -55,25 +50,25 @@ public class OperationServiceImpl implements OperationService {
             operationEntity.addClient(accountEntity.getClient());
 
             entityManager.merge(accountEntity);
-            return 1;
+            return OK;
         }catch (Exception e){
             e.printStackTrace();
             return ERROR;
         }
     }
     //достаем аккаунт из репозитория, проверяем, не будет ли сумма меньше 0, вычитаем сумму из операции, сохраняем аккаунт и операцию
+    //todo заменить Entity на Dto, затем трансформировать на входе, далее по той же логике
     @Transactional
     public int pullMoney(OperationEntity operationEntity, String login){
         try {
             final AccountEntity accountEntity = getAccount(operationEntity.getAccountsId());
             if (accountEntity.getDeposit().subtract(operationEntity.getSumm()).doubleValue() >= 0.00 &&
                     accountEntity.getClient().getLogin().equals(login)) {
+
                 accountEntity.setDeposit(accountEntity.getDeposit().subtract(operationEntity.getSumm()));
-
                 operationEntity.addClient(accountEntity.getClient());
-
                 entityManager.merge(accountEntity);
-                return 1;
+                return OK;
             }else return ERROR;
         }catch (Exception e){
             e.printStackTrace();
@@ -85,11 +80,12 @@ public class OperationServiceImpl implements OperationService {
     //достаем аккаунт из репозитория, в который осущ-ся перевод;
     //отнимаем у инициатора, прибавляем у адресата
     //сохраняем два аккаунта и операции
+    //todo заменить Entity на Dto, затем трансформировать на входе, далее по той же логике
     @Transactional
     public int transferMoney(OperationEntity operationTo, OperationEntity operationFrom, String login){
         try {
             final AccountEntity accountTo = getAccount(operationTo.getSeconAccountId());  //аккаунт адресата
-            if (accountTo == null) return -1; //если аккаунта не существует
+            if (accountTo == null) return ERROR; //если аккаунта не существует
 
             final AccountEntity accountFrom = getAccount(operationTo.getAccountsId());    //аккаунт инициатора
             if (accountFrom.getDeposit().subtract(operationFrom.getSumm()).doubleValue() >= 0.00 &&
@@ -97,17 +93,13 @@ public class OperationServiceImpl implements OperationService {
                 accountFrom.setDeposit(accountFrom.getDeposit().subtract(operationFrom.getSumm()));
                 accountTo.setDeposit(accountTo.getDeposit().add(operationFrom.getSumm()));
 
-
                 entityManager.merge(accountFrom);                   //апдейт счета адресата
                 operationFrom.addClient(accountFrom.getClient());   //запись о переводе со стороны адресата
-                //entityManager.persist(operationFrom);
-
 
                 entityManager.merge(accountTo);                     //апдейт счета инициатора
                 operationTo.addClient(accountTo.getClient());       //запись о переводе со стороны инициатора
-                //entityManager.persist(operationTo);
 
-                return 1;
+                return OK;
             } else return ERROR;
         }catch (Exception e){
             e.printStackTrace();
