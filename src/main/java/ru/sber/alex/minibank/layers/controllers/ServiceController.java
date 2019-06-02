@@ -80,6 +80,8 @@ public class ServiceController {
 
         }catch (ClassCastException | NullPointerException e){
             e.printStackTrace();
+            model.addAttribute("userError", true);
+            model.addAttribute("errorMessage", "Ошибка получения истории операций.");
             return "error";
         }
 
@@ -99,6 +101,7 @@ public class ServiceController {
             model.addAttribute("message", "Счет пополнен!");
             return "successtransaction";
         }else {
+            model.addAttribute("userError", true);
             model.addAttribute("errorMessage", "Ошибка при внесении средств.");
             return "error";
         }
@@ -117,6 +120,7 @@ public class ServiceController {
             model.addAttribute("message", "Средства выведены!");
             return "successtransaction";
         }else {
+            model.addAttribute("userError", true);
             model.addAttribute("errorMessage", "Ошибка при выводе средств.");
             return "error";
         }
@@ -135,6 +139,7 @@ public class ServiceController {
             model.addAttribute("message", "Перевод успешно проведен!");
             return "successtransaction";
         }else {
+            model.addAttribute("userError", true);
             model.addAttribute("errorMessage", "Ошибка при переводе средств.");
             return "error";
         }

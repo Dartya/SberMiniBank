@@ -21,6 +21,7 @@ public class ErrorController {
     public String handleIOException(final IOException ioException, final Model model){
         logger.error("IOException", ioException);
         String errorMessage = (ioException != null ? ioException.getMessage() : "Unknown error");
+        model.addAttribute("userError", false);
         model.addAttribute("errorMessage", errorMessage);
         return "error";
     }
@@ -30,6 +31,7 @@ public class ErrorController {
     public String exception(final Throwable throwable, final Model model) {
         logger.error("Exception during execution of SpringSecurity application", throwable);
         String errorMessage = (throwable != null ? throwable.getMessage() : "Unknown error");
+        model.addAttribute("userError", false);
         model.addAttribute("errorMessage", errorMessage);
         return "error";
     }

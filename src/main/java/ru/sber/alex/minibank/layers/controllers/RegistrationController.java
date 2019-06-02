@@ -27,16 +27,15 @@ public class RegistrationController {
     public String registrationPost(@ModelAttribute ClientDto client, Model model) {
         if (client.getName().equals("")) {
             String error = "Ошибка регистрации пользователя";
+            model.addAttribute("userError", true);
             model.addAttribute("errorMessage", error);
             return "error";
         }
-
-        String error = "Ошибка регистрации пользователя";
-        model.addAttribute("name", error);
         if (businessLogic.registerAcc(client) != -1) {
             model.addAttribute("client", client);
             return "success";
         } else {
+            model.addAttribute("userError", true);
             return "error";
         }
     }
