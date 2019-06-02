@@ -9,20 +9,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.sber.alex.minibank.dto.ClientDto;
 import ru.sber.alex.minibank.layers.logic.BusinessLogic;
 
+/**
+ * Контроллер регистрации пользователей.
+ */
 @Controller
 public class RegistrationController {
 
     @Autowired
     private BusinessLogic businessLogic;
 
-    //get registration page mapping
     @GetMapping("/registration")
     public String registrationGet(Model model){
         model.addAttribute("client", new ClientDto());
         return "registration";
     }
 
-    //push POST from data
     @PostMapping("/registration")
     public String registrationPost(@ModelAttribute ClientDto client, Model model) {
         if (client.getName().equals("")) {
@@ -39,5 +40,4 @@ public class RegistrationController {
             return "error";
         }
     }
-
 }

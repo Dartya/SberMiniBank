@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Класс сущности БД "Название операции"
+ */
 @Entity
 @Table(name="dict_operations")
 public class DictOperationsEntity {

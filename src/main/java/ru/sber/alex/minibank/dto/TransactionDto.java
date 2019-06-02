@@ -3,6 +3,9 @@ package ru.sber.alex.minibank.dto;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * DTO транзакции.
+ */
 public class TransactionDto {
 
     private int accFrom;

@@ -83,6 +83,7 @@ footer{
 }
 
 .cusheader{
+    contain: content;
     border-radius: 5px;
     padding: 10px;              /* Поля вокруг текста */
     background: #ffffff;        /* Цвет фона */

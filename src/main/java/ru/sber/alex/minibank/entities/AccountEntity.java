@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Класс сущности БД "Счет"
+ */
 @Entity
 @Table(name="accounts")
 public class AccountEntity {

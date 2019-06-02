@@ -1,11 +1,12 @@
 package ru.sber.alex.minibank.dto;
 
-import ru.sber.alex.minibank.entities.CurrenciesEntity;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * DTO сущности счета.
+ */
 public class AccountDto {
 
     private int id;

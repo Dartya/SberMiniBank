@@ -23,17 +23,12 @@ import javax.sql.DataSource;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * Главный конфиг MVC-приложения.
+ * Здесь указываются статические ресурсы приложения, настройки БД,
+ */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
-    public void addViewControllers(ViewControllerRegistry registry){
-        registry.addViewController("login").setViewName("login");
-    }
-
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/static/**")
-                .addResourceLocations("classpath:/static/");
-    }
 
     @Value("${db.url}")
     private String dbUrl;
@@ -51,6 +46,21 @@ public class MvcConfig implements WebMvcConfigurer {
     @Autowired
     private ObjectMapper objectMapper;
 
+
+    /**
+     * Добавляет обработчики ресурсов.
+     * @param registry
+     */
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
+    }
+
+    /**
+     * Создает бин DataSource, при настройке указывается класс источника данных (СУБД), адрес и параметры доступа
+     * @return настроенный DataSource
+     */
     @Bean
     public DataSource dataSource() {
         final Map<String, String> env = System.getenv();
@@ -62,7 +72,17 @@ public class MvcConfig implements WebMvcConfigurer {
                 .password(dbPassword)
                 .build();
     }
+
+    @PostConstruct
+    public void setupObjectMapper() {
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.registerModule(new Jdk8Module());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+    }
+
     /*
+    Оставляю здесь - расскоментирую при форке на микросервисную архитектуру
     @Bean(destroyMethod = "close")
     public Client restClient() {
         return ClientBuilder.newBuilder().register(new JacksonJsonProvider(objectMapper)).build();
@@ -76,7 +96,7 @@ public class MvcConfig implements WebMvcConfigurer {
             register(new LoggingFeature(Logger.getLogger("http-endpoints"), Level.INFO, LoggingFeature.Verbosity.PAYLOAD_TEXT, null));
         }
     }
-    */
+
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
@@ -86,13 +106,5 @@ public class MvcConfig implements WebMvcConfigurer {
     public Function<String, String> serviceUrlProvider() {
         return serviceName -> System.getenv().get(serviceName + ".url");
     }
-
-    @PostConstruct
-    public void setupObjectMapper() {
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.registerModule(new Jdk8Module());
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-    }
-
+    */
 }

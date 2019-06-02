@@ -1,41 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
-<header th:fragment="copyheader">
-    <div class="cusheader" style="contain: content" >
-        <div style="float: left;">
-            <p><a href="/" th:href="@{/}"><img src="/static/image/logo.png" height="125" width="300"/></a></p>
-        </div>
-        <div style="float: right; padding: 5px">
-            <div sec:authorize="isAnonymous()">
-
-                <form th:action="@{/login}" method="post">
-                    <table>
-                        <tr><td><label> Логин: </label></td><td><input class="input" type="text" name="username"/></td></tr>
-                        <tr><td><label> Пароль: </label></td><td><input class="input" type="password" name="password"/></td></tr>
-                        <td align="center"><input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Войти"/></td>
-                        <td align="center"><a href="/registration"> <button style="align: center;" class="btn btn-outline-success my-2 my-sm-0" type="button">Регистрация</button> </a></td>
-                    </table>
-                </form>
-                <!--form action="/login">
-                    <button class="float-left submit-button">Войти</button>
-                </form-->
-            </div>
-            <!--
-            <div style="float: right" sec:authorize="isAuthenticated()">
-                <table>
-                    <tr><td>Добро пожаловать,</td></tr>
-                    <tr><td><b>[[${#httpServletRequest.remoteUser}]]</b></td></tr>
-                    <tr><td>
-                        <form th:action="@{/logout}" method="post">
-                            <p><input class="button" type="submit" value="Выйти"/></p>
+<header th:fragment="copyheader" class="content">
+    <table style="width: 100%;">
+        <tr>
+            <td><div class="cusheader" style="contain: content; float: top;">
+                <div style="float: left;">
+                    <p><a href="/" th:href="@{/}"><img src="/static/image/logo.png" height="125" width="300"/></a></p>
+                </div>
+                <div style="float: right; padding: 5px">
+                    <div sec:authorize="isAnonymous()">
+                        <form th:action="@{/login}" method="post">
+                            <table>
+                                <tr><td><label> Логин: </label></td><td><input class="input" type="text" name="username"/></td></tr>
+                                <tr><td><label> Пароль: </label></td><td><input class="input" type="password" name="password"/></td></tr>
+                                <tr><td align="center"><input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Войти"/></td>
+                                <td align="center"><a href="/registration"> <button style="align: center;" class="btn btn-outline-success my-2 my-sm-0" type="button">Регистрация</button> </a></td></tr>
+                            </table>
                         </form>
-                    </td></tr>
-                </table>
-            </div>
-            -->
-        </div>
-    </div>
-    <div style="float: bottom;">
-        <div th:replace="fragments/navbar :: nav"></div>
-    </div>
+                    </div>
+                </div>
+            </div></td>
+        </tr>
+        <tr>
+            <td><div style="float: bottom;">
+                <div th:replace="fragments/navbar :: nav"></div>
+            </div></td>
+        </tr>
+    </table>
 </header>

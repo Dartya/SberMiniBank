@@ -100,8 +100,8 @@ public class OperationDto {
         OperationDto that = (OperationDto) o;
         return id == that.id &&
                 accountId == that.accountId &&
-                secondAccId == that.secondAccId &&
                 operationCode == that.operationCode &&
+                Objects.equals(secondAccId, that.secondAccId) &&
                 Objects.equals(summ, that.summ) &&
                 Objects.equals(timestamp, that.timestamp) &&
                 Objects.equals(clientDtos, that.clientDtos) &&

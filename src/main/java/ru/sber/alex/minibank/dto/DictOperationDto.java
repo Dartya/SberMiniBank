@@ -2,6 +2,9 @@ package ru.sber.alex.minibank.dto;
 
 import java.util.Objects;
 
+/**
+ * DTO сущности названия операции.
+ */
 public class DictOperationDto {
     private int id;
     private String operation;

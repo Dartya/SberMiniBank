@@ -1,8 +1,10 @@
 package ru.sber.alex.minibank.dto;
 
-
 import java.util.Objects;
 
+/**
+ * DTO сущности валюты.
+ */
 public class CurrencyDto {
 
     private int id;

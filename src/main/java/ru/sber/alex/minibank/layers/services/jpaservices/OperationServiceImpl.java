@@ -11,6 +11,9 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Реализация сервиса сущности БД "Операция".
+ */
 @Repository
 @Slf4j
 public class OperationServiceImpl implements OperationService {
@@ -42,7 +45,11 @@ public class OperationServiceImpl implements OperationService {
         return operationRepo.findByAccountsId(id);
     }
 
-    //достаем аккаунт из репозитория, прибавляем сумму из операции, сохраняем аккаунт и операцию
+    /**
+     * Достает счет из репозитория, прибавляет сумму из операции, сохраняет аккаунт и операцию
+     * @param operationEntity Сущность БД "Операция"
+     * @return код успешности операции: 1 - ОК, -1 - ошибка.
+     */
     @Transactional
     public int pushMoney(OperationEntity operationEntity){
         try {
@@ -60,7 +67,13 @@ public class OperationServiceImpl implements OperationService {
             return ERROR;
         }
     }
-    //достаем аккаунт из репозитория, проверяем, не будет ли сумма меньше 0, вычитаем сумму из операции, сохраняем аккаунт и операцию
+
+    /**
+     * Достает аккаунт из репозитория, проверяет, не будет ли сумма меньше 0, вычитает сумму из операции, сохраняет аккаунт и операцию.
+     * @param operationEntity Сущность БД "Операция"
+     * @param login логин текущего пользователя
+     * @return код успешности операции: 1 - ОК, -1 - ошибка.
+     */
     @Transactional
     public int pullMoney(OperationEntity operationEntity, String login){
         try {

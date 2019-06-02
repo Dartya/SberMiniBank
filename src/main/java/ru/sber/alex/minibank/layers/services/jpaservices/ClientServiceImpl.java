@@ -21,11 +21,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Реализация сервиса сущности БД "Счет".
+ */
 @Repository
 @Slf4j
 public class ClientServiceImpl implements ClientService {
 
+    /**
+     * Код завершения операции - ошибка
+     */
     private final static int ERROR = -1;
+    /**
+     * Код завершения операции - успех
+     */
     private final static int OK = 1;
 
     @Autowired
@@ -37,11 +46,22 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private OperationService operationService;
 
+    /**
+     * Достает из репозитория клиента с указанным логином.
+     * @param login логин пользователя.
+     * @return сущность БД "Клиент"
+     */
     @Override
     public ClientEntity getClient(String login) {
         return clientRepo.findByLogin(login);
     }
 
+    /**
+     * Выполняет транзакцию регистрации клиента.
+     * Регистрирует клиента, берет его id, создает ему дефолтный рублевый счет с указанием владельца, записывает операцию создания счета.
+     * @param client Сущность БД "Клиент"
+     * @return код успешности операции: 1 - ОК, -1 - ошибка.
+     */
     @Transactional
     public int addClient(ClientEntity client){
         try{
@@ -71,6 +91,11 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    /**
+     * Ищет все связанные с клиентом операции для вывода истории операций в личном кабинете.
+     * @param clientLogin Сущность БД "Клиент"
+     * @return List с заполненными объектами ClientOperationDto - парами ДТО "Клиент" и List его операций.
+     */
     public List<ClientOperationDto> getClientOperationsDto(String clientLogin){
         List<ClientOperationDto> clientOperationDtoList = new ArrayList<>();
         List<OperationDto> operationDtos = new ArrayList<>();

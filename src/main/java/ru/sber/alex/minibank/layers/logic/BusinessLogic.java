@@ -20,12 +20,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Основной класс бизнес-логики приложения - связывается с сервисами сущностей БД.
+ * В атомарной версии приложения готовит объекты сущностей БД и передает их как параметры в соответствующие сервисы.
+ * В микросервисной версии обменивается DTO с другими сервисами.
+ */
 @Service
 public class BusinessLogic {
-
+/* Оставляю здесь до форка на микросервисную архитектуру
     @Autowired
     private RestTemplate restTemplate;
-
+*/
     @Autowired
     private ClientServiceImpl clientService;
 
@@ -41,6 +46,11 @@ public class BusinessLogic {
     @Autowired
     private MailService mailService;
 
+    /**
+     * Готовит данные для передачи в сервис клиентов для последующей регистрации клиента.
+     * @param client ДТО - заполненная форма регистрации
+     * @return код успешности операции: 1 - ОК, -1 - ошибка.
+     */
     public int registerAcc(ClientDto client){
         ClientEntity clientEntity = new ClientEntity();
         clientEntity.setLogin(client.getLogin());
@@ -53,6 +63,11 @@ public class BusinessLogic {
         return clientService.addClient(clientEntity);
     }
 
+    /**
+     * Готовит данные для передачи в сервис операций, часть общей логики пополнения счета.
+     * @param transaction ДТО - заполненная форма транзакции.
+     * @return код успешности операции: 1 - ОК, -1 - ошибка.
+     */
     public int makePush(TransactionDto transaction){
         final OperationEntity operationEntity = new OperationEntity();
         operationEntity.setAccountsId(transaction.getAccFrom());
@@ -63,6 +78,11 @@ public class BusinessLogic {
         return operationService.pushMoney(operationEntity);
     }
 
+    /**
+     * Готовит данные для передачи в сервис операций, часть общей логики выведения средств со счета.
+     * @param transaction ДТО - заполненная форма транзакции.
+     * @return код успешности операции: 1 - ОК, -1 - ошибка.
+     */
     public int makePull(TransactionDto transaction){
         final OperationEntity operationEntity = new OperationEntity();
         operationEntity.setAccountsId(transaction.getAccFrom());
@@ -73,6 +93,12 @@ public class BusinessLogic {
         return operationService.pullMoney(operationEntity, transaction.getLogin());
     }
 
+    /**
+     * Готовит данные для передачи в сервис операций, часть общей логики перевода средств с одного счета на другой.
+     * Отправляет письмо на e-mail пользователя-адресату перевода.
+     * @param transaction ДТО - заполненная форма транзакции.
+     * @return код успешности операции: 1 - ОК, -1 - ошибка.
+     */
     public int makeTransfer(TransactionDto transaction){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -108,6 +134,11 @@ public class BusinessLogic {
         return -1;
     }
 
+    /**
+     * Запрашивает историю операций клиента с указанным в параметре логином.
+     * @param clientLogin логин пользователя
+     * @return List с заполненными ДТО ClientOperationDto
+     */
     public List<ClientOperationDto> getClientHistory(String clientLogin){
         return clientService.getClientOperationsDto(clientLogin);
     }

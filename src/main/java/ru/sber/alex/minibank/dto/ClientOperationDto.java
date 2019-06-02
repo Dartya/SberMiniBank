@@ -3,6 +3,9 @@ package ru.sber.alex.minibank.dto;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * DTO объекта клиент-операция.
+ */
 public class ClientOperationDto {
 
     private ClientDto clientDto;

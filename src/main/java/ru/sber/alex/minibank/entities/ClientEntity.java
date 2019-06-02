@@ -3,6 +3,9 @@ package ru.sber.alex.minibank.entities;
 import javax.persistence.*;
 import java.util.*;
 
+/**
+ * Класс сущности БД "Клиент"
+ */
 @Entity
 @Table(name="clients")
 public class ClientEntity {

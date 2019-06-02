@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * Класс сущности БД "Валюта"
+ */
 @Entity
 @Table(name="currencies")
 public class CurrenciesEntity {

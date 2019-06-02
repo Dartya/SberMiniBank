@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.*;
 
+/**
+ * Класс сущности БД "Операция"
+ */
 @Entity
 @Table(name="operations")
 public class OperationEntity {
@@ -33,7 +36,7 @@ public class OperationEntity {
     @JoinColumn(name="dict_operation_id", insertable = false, updatable = false)
     private DictOperationsEntity dictOperation;
 
-//    Аннотации в комменте не проверялись, но пускай тут останутся для примера
+//    Аннотации в комменте не проверялись, но пускай тут останутся для примера альтернативной связи ManyToMany
 //    @ManyToMany(cascade = {
 //            CascadeType.PERSIST,
 //            CascadeType.MERGE

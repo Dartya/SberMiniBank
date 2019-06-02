@@ -13,6 +13,9 @@ import ru.sber.alex.minibank.entities.ClientEntity;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Расширенная реализация сервиса сущности БД "Клиент". Используется Spring Security.
+ */
 @Service
 public class ClientDetailServiceImpl implements UserDetailsService {
 

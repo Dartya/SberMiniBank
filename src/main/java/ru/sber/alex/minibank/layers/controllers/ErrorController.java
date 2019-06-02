@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.io.IOException;
 
-
+/**
+ * Контроллер возникающих ошибок.
+ */
 @ControllerAdvice
 public class ErrorController {
 
