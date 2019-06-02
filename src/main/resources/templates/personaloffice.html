@@ -20,7 +20,7 @@
                             <td align="left"><p><b>Фамилия, Имя, Отчество: </b></p></td><td><p th:utext="${surname}">Name</p></td><td><p th:utext="${name}">Name</p></td><td><p th:utext="${secondName}">Name</p></td>
                         </tr>
                         <tr class="green2">
-                            <td align="left"><p><b>Номер счета и баланс: </b></p></td><td><p th:utext="'№' + ${history.get(0).getAccountsId()}"></p></td><td><p th:utext="${deposit}">Name</p></td><td><p th:utext="${currency}">Name</p></td>
+                            <td align="left"><p><b>Номер счета и баланс: </b></p></td><td><p th:utext="'№' + ${history.get(0).getAccountId()}"></p></td><td><p th:utext="${deposit}">Name</p></td><td><p th:utext="${currency}">Name</p></td>
                         </tr>
                     </table>
                 </div>
@@ -58,14 +58,14 @@
                             <td class="la"><p>7</p></td>
                         </tr>
                         -->
-                        <tr th:each="history, itemStat : *{history}">
-                            <td class="la"><p th:utext="${history.getId()}"></p></td>
-                            <td class="la"><p th:utext="${history.getDictOperation().getOperation()}"></p></td>
-                            <td class="la"><p th:utext="${history.getAccountsId()}"></p></td>
-                            <td class="la"><p th:utext="${history.getSumm()}"></p></td>
+                        <tr th:each="operation, itemStat : *{history}">
+                            <td class="la"><p th:utext="${operation.getId()}"></p></td>
+                            <td class="la"><p th:utext="${operation.getDictOperationDto().getOperation()}"></p></td>
+                            <td class="la"><p th:utext="${operation.getAccountId()}"></p></td>
+                            <td class="la"><p th:utext="${operation.getSumm()}"></p></td>
                             <td class="la"><p th:utext="${currency}"></p></td>
-                            <td class="la"><p th:utext="${history.getSeconAccountId()}"></p></td>
-                            <td class="la"><p th:utext="${history.getTimestamp()}"></p></td>
+                            <td class="la"><p th:utext="${operation.getSecondAccId()}"></p></td>
+                            <td class="la"><p th:utext="${operation.getTimestamp()}"></p></td>
                         </tr>
                     </table>
                 </div>

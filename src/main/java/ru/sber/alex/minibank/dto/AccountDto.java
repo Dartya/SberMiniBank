@@ -14,7 +14,7 @@ public class AccountDto {
     private BigDecimal deposit;
 
     private ClientDto client;
-    private CurrenciesEntity currency;
+    private CurrencyDto currency;
     private List<OperationDto> operationsAccId;
     private List<OperationDto> operationsSecAccId;
 
@@ -68,11 +68,11 @@ public class AccountDto {
         this.client = client;
     }
 
-    public CurrenciesEntity getCurrency() {
+    public CurrencyDto getCurrency() {
         return currency;
     }
 
-    public void setCurrency(CurrenciesEntity currency) {
+    public void setCurrency(CurrencyDto currency) {
         this.currency = currency;
     }
 

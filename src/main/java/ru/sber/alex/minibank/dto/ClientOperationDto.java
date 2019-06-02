@@ -1,16 +1,17 @@
 package ru.sber.alex.minibank.dto;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ClientOperationDto {
 
     private ClientDto clientDto;
-    private OperationDto operationDto;
+    private List<OperationDto> operationDto;
 
     public ClientOperationDto() {
     }
 
-    public ClientOperationDto(ClientDto clientDto, OperationDto operationDto) {
+    public ClientOperationDto(ClientDto clientDto, List<OperationDto> operationDto) {
         this.clientDto = clientDto;
         this.operationDto = operationDto;
     }
@@ -23,11 +24,11 @@ public class ClientOperationDto {
         this.clientDto = clientDto;
     }
 
-    public OperationDto getOperationDto() {
+    public List<OperationDto> getOperationDto() {
         return operationDto;
     }
 
-    public void setOperationDto(OperationDto operationDto) {
+    public void setOperationDto(List<OperationDto> operationDto) {
         this.operationDto = operationDto;
     }
 

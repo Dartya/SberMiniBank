@@ -6,6 +6,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.sber.alex.minibank.dto.ClientDto;
+import ru.sber.alex.minibank.dto.ClientOperationDto;
+import ru.sber.alex.minibank.dto.OperationDto;
 import ru.sber.alex.minibank.dto.TransactionDto;
 import ru.sber.alex.minibank.entities.ClientEntity;
 import ru.sber.alex.minibank.entities.OperationEntity;
@@ -44,23 +47,19 @@ public class ServiceController {
     @GetMapping("/personaloffice")
     public String persOffice(Model model){
 
-        Map<ClientEntity, List<OperationEntity>> map = businessLogic.getClientHistory(getCurrentLogin());
+        List<ClientOperationDto> clientOperationDtoList = businessLogic.getClientHistory(getCurrentLogin());
 
-        ClientEntity clientEntity;
-        List<OperationEntity> history;
+        ClientOperationDto clientOperationDto = clientOperationDtoList.get(0);
+        ClientDto clientDto = clientOperationDto.getClientDto();
+        List<OperationDto> history = clientOperationDto.getOperationDto();
 
         try {
-            Iterator<Map.Entry<ClientEntity, List<OperationEntity>>> itr = map.entrySet().iterator();
-            Map.Entry<ClientEntity, List<OperationEntity>> entry = itr.next();
+            String name = clientDto.getName();
+            String surname = clientDto.getSurname();
+            String secondName = clientDto.getSecondName();
+            Double deposit = clientDto.getAccountDtos().get(0).getDeposit().doubleValue();
+            String currency = clientDto.getAccountDtos().get(0).getCurrency().getCurrencyCode();
 
-            clientEntity = entry.getKey();
-            String name = clientEntity.getName();
-            String surname = clientEntity.getSurname();
-            String secondName = clientEntity.getSecondName();
-            Double deposit = clientEntity.getAccounts().get(0).getDeposit().doubleValue();
-            String currency = clientEntity.getAccounts().get(0).getCurrency().getCurrencyCode();
-
-            history = entry.getValue();
             history.forEach(System.out::println);
 
             model.addAttribute("name", name);
@@ -70,7 +69,12 @@ public class ServiceController {
             model.addAttribute("currency", currency);
             model.addAttribute("history", history);
 
-            System.out.println("name = "+name+", surname = "+surname+", secondName = "+secondName+", deposit = "+deposit+", currency = "+currency);  //для проверки
+            System.out.println("name = "+name
+                    +", surname = "+surname
+                    +", secondName = "+secondName
+                    +", deposit = "+deposit
+                    +", currency = "+currency);  //для проверки
+
             return "personaloffice";
 
         }catch (ClassCastException | NullPointerException e){

@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.sber.alex.minibank.dto.ClientDto;
+import ru.sber.alex.minibank.dto.ClientOperationDto;
 import ru.sber.alex.minibank.dto.TransactionDto;
 import ru.sber.alex.minibank.entities.AccountEntity;
 import ru.sber.alex.minibank.entities.ClientEntity;
@@ -111,9 +112,7 @@ public class BusinessLogic {
         return -1;
     }
 
-    //todo заменить Entity на Dto
-    public Map<ClientEntity, List<OperationEntity>> getClientHistory(String clientLogin){
-
-        return clientService.getClientOperationsMap(clientLogin);
+    public List<ClientOperationDto> getClientHistory(String clientLogin){
+        return clientService.getClientOperationsDto(clientLogin);
     }
 }

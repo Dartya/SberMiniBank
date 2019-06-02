@@ -1,11 +1,7 @@
 package ru.sber.alex.minibank.layers.logic;
 
-import ru.sber.alex.minibank.dto.AccountDto;
-import ru.sber.alex.minibank.dto.ClientDto;
-import ru.sber.alex.minibank.dto.OperationDto;
-import ru.sber.alex.minibank.entities.AccountEntity;
-import ru.sber.alex.minibank.entities.ClientEntity;
-import ru.sber.alex.minibank.entities.OperationEntity;
+import ru.sber.alex.minibank.dto.*;
+import ru.sber.alex.minibank.entities.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +80,7 @@ public class TransferFuction {
         );
         clientDto.setId(accountEntity.getClient().getId());
         accountDto.setClient(clientDto);
+        accountDto.setCurrency(currencyEntityToDto(accountEntity.getCurrency()));
 
         return accountDto;
     }
@@ -120,17 +117,25 @@ public class TransferFuction {
      * @param operationEntity
      * @return заполненный OperationDto
      */
-    private static OperationDto operationEntityToDto(OperationEntity operationEntity){
+    public static OperationDto operationEntityToDto(OperationEntity operationEntity){
+        Integer secAccId;
+
+        if (operationEntity.getSeconAccountId() != null){
+            secAccId = operationEntity.getSeconAccountId();
+        }else{ secAccId = null;}
+
         OperationDto operationDto = new OperationDto(
                 operationEntity.getId(),
                 operationEntity.getAccountsId(),
-                operationEntity.getSeconAccountId(),
+                secAccId,
                 operationEntity.getDictOperationID(),
                 operationEntity.getSumm(),
                 operationEntity.getTimestamp()
         );
         List<ClientDto> clientDtos = new ArrayList<>();
         List<ClientEntity> clientEntities = operationEntity.getClients();
+        DictOperationDto dictOperationDto = dictOperationEntityToDto(operationEntity.getDictOperation());
+        operationDto.setDictOperationDto(dictOperationDto);
         for (ClientEntity clientEntity: clientEntities) {
             clientDtos.add(clientEntityToDto(clientEntity));
         }
@@ -144,7 +149,7 @@ public class TransferFuction {
      * @param operationDto
      * @return заполненный OperationEntity
      */
-    private static OperationEntity operationDtoToEntity(OperationDto operationDto){
+    public static OperationEntity operationDtoToEntity(OperationDto operationDto){
         OperationEntity operationEntity = new OperationEntity(
                 operationDto.getAccountId(),
                 operationDto.getSecondAccId(),
@@ -160,5 +165,18 @@ public class TransferFuction {
         operationEntity.setClients(clientEntities);
 
         return operationEntity;
+    }
+
+    public static DictOperationDto dictOperationEntityToDto(DictOperationsEntity entity){
+        return new DictOperationDto(entity.getId(), entity.getOperation());
+    }
+
+    public static CurrencyDto currencyEntityToDto(CurrenciesEntity entity){
+        CurrencyDto currencyDto = new CurrencyDto(
+                entity.getId(),
+                entity.getCurrencyCode(),
+                entity.getCurrency());
+
+        return currencyDto;
     }
 }
