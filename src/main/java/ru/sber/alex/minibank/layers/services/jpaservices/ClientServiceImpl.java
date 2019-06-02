@@ -3,6 +3,7 @@ package ru.sber.alex.minibank.layers.services.jpaservices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.sber.alex.minibank.dto.ClientDto;
 import ru.sber.alex.minibank.dto.ClientOperationDto;
 import ru.sber.alex.minibank.dto.OperationDto;
 import ru.sber.alex.minibank.entities.AccountEntity;
@@ -36,13 +37,11 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private OperationService operationService;
 
-    //потом нужно перенести в сервис пользователей
     @Override
     public ClientEntity getClient(String login) {
         return clientRepo.findByLogin(login);
     }
 
-    //todo заменить Entity на Dto, затем трансформировать на входе, далее по той же логике
     @Transactional
     public int addClient(ClientEntity client){
         try{
@@ -86,10 +85,8 @@ public class ClientServiceImpl implements ClientService {
             for (OperationEntity operationEntity : operations) {
                 operationDtos.add(TransferFuction.operationEntityToDto(operationEntity));
             }
-
             clientOperationDtoList.add(new ClientOperationDto(TransferFuction.clientEntityToDto(client), operationDtos));
         }
-
         return clientOperationDtoList;
     }
 }

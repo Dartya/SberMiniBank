@@ -33,6 +33,7 @@ public class ServiceController {
     public String index() {
         return "index";
     }
+
     @GetMapping("/error")
     public String loginError(Model model){
         model.addAttribute("loginError", true);

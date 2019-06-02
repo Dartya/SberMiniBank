@@ -29,10 +29,11 @@ public class TransferFuction {
 
         List<AccountDto> accountDtos = new ArrayList<>();
         List<AccountEntity> accountEntities = clientEntity.getAccounts();
-        for (AccountEntity accountEntity: accountEntities) {
-            accountDtos.add(accountEntityToDto(accountEntity));
+        if (accountEntities != null) {
+            for (AccountEntity accountEntity : accountEntities) {
+                accountDtos.add(accountEntityToDto(accountEntity));
+            }
         }
-
         clientDto.setAccountDtos(accountDtos);
 
         return clientDto;
@@ -132,12 +133,15 @@ public class TransferFuction {
                 operationEntity.getSumm(),
                 operationEntity.getTimestamp()
         );
-        List<ClientDto> clientDtos = new ArrayList<>();
-        List<ClientEntity> clientEntities = operationEntity.getClients();
         DictOperationDto dictOperationDto = dictOperationEntityToDto(operationEntity.getDictOperation());
         operationDto.setDictOperationDto(dictOperationDto);
-        for (ClientEntity clientEntity: clientEntities) {
-            clientDtos.add(clientEntityToDto(clientEntity));
+
+        List<ClientDto> clientDtos = new ArrayList<>();
+        List<ClientEntity> clientEntities = operationEntity.getClients();
+        if (clientEntities != null) {
+            for (ClientEntity clientEntity : clientEntities) {
+                clientDtos.add(clientEntityToDto(clientEntity));
+            }
         }
         operationDto.setClientDtos(clientDtos);
 
@@ -167,10 +171,20 @@ public class TransferFuction {
         return operationEntity;
     }
 
+    /**
+     * Переводит DictOperationsEntity в DictOperationDto
+     * @param entity
+     * @return заполненный DictOperationDto
+     */
     public static DictOperationDto dictOperationEntityToDto(DictOperationsEntity entity){
         return new DictOperationDto(entity.getId(), entity.getOperation());
     }
 
+    /**
+     * Переводит CurrenciesEntity в CurrencyDto
+     * @param entity
+     * @return заполненный CurrencyDto
+     */
     public static CurrencyDto currencyEntityToDto(CurrenciesEntity entity){
         CurrencyDto currencyDto = new CurrencyDto(
                 entity.getId(),

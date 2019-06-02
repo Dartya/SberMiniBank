@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.sber.alex.minibank.entities.AccountEntity;
-import ru.sber.alex.minibank.entities.ClientEntity;
 import ru.sber.alex.minibank.entities.OperationEntity;
 import ru.sber.alex.minibank.repository.OperationRepo;
 
@@ -16,7 +15,13 @@ import java.util.List;
 @Slf4j
 public class OperationServiceImpl implements OperationService {
 
+    /**
+     * Код завершения операции - ошибка
+     */
     private final static int ERROR = -1;
+    /**
+     * Код завершения операции - успех
+     */
     private final static int OK = 1;
 
     @Autowired
@@ -38,9 +43,8 @@ public class OperationServiceImpl implements OperationService {
     }
 
     //достаем аккаунт из репозитория, прибавляем сумму из операции, сохраняем аккаунт и операцию
-    //todo заменить Entity на Dto, затем трансформировать на входе, далее по той же логике
     @Transactional
-    public int pushMoney(OperationEntity operationEntity, String login){
+    public int pushMoney(OperationEntity operationEntity){
         try {
             System.out.println("operationEntity acc id = "+operationEntity.getAccountsId());
             final AccountEntity accountEntity = getAccount(operationEntity.getAccountsId());
@@ -57,7 +61,6 @@ public class OperationServiceImpl implements OperationService {
         }
     }
     //достаем аккаунт из репозитория, проверяем, не будет ли сумма меньше 0, вычитаем сумму из операции, сохраняем аккаунт и операцию
-    //todo заменить Entity на Dto, затем трансформировать на входе, далее по той же логике
     @Transactional
     public int pullMoney(OperationEntity operationEntity, String login){
         try {
@@ -75,17 +78,24 @@ public class OperationServiceImpl implements OperationService {
             return ERROR;
         }
     }
-    //достаем аккаунт из репозитория, из которого осущ-ся перевод;
-    //проверяем, не станет ли меньше 0;
-    //достаем аккаунт из репозитория, в который осущ-ся перевод;
-    //отнимаем у инициатора, прибавляем у адресата
-    //сохраняем два аккаунта и операции
-    //todo заменить Entity на Dto, затем трансформировать на входе, далее по той же логике
+
+    /**
+     * Выполняет транзакцию: переводит средства с однгого счета на другой счет
+     * Достает из репозитория счет, из которого осуществляется перевод;
+     * проверяет, не станет ли депозит меньше 0 после окончания операции;
+     * достает из репозитория счет, в который осущетсвляется перевод;
+     * вычитает из счета инициатора перевода, прибавляет к счету адресата сумму;
+     * обновляет два счета и добавляет две операции в БД.
+     * @param operationTo Операция адресата
+     * @param operationFrom Операция инициатора
+     * @param login логин инициатора для подтверждения валидности операции
+     * @return код завершения операции
+     */
     @Transactional
     public int transferMoney(OperationEntity operationTo, OperationEntity operationFrom, String login){
         try {
             final AccountEntity accountTo = getAccount(operationTo.getSeconAccountId());  //аккаунт адресата
-            if (accountTo == null) return ERROR; //если аккаунта не существует
+            if (accountTo == null) return ERROR; //если аккаунта не существует - ошибка
 
             final AccountEntity accountFrom = getAccount(operationTo.getAccountsId());    //аккаунт инициатора
             if (accountFrom.getDeposit().subtract(operationFrom.getSumm()).doubleValue() >= 0.00 &&

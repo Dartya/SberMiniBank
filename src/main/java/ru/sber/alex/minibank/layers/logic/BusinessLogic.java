@@ -50,7 +50,6 @@ public class BusinessLogic {
         clientEntity.setSurname(client.getSurname());
         clientEntity.setSecondName(client.getSecondName());
 
-        //todo трнасформировать Entity в Dto
         return clientService.addClient(clientEntity);
     }
 
@@ -61,8 +60,7 @@ public class BusinessLogic {
         operationEntity.setSumm(transaction.getSumm());
         operationEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
-        //todo трнасформировать Entity в Dto
-        return operationService.pushMoney(operationEntity, transaction.getLogin());
+        return operationService.pushMoney(operationEntity);
     }
 
     public int makePull(TransactionDto transaction){
@@ -72,7 +70,6 @@ public class BusinessLogic {
         operationEntity.setSumm(transaction.getSumm());
         operationEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
-        //todo трнасформировать Entity в Dto
         return operationService.pullMoney(operationEntity, transaction.getLogin());
     }
 
@@ -95,7 +92,6 @@ public class BusinessLogic {
         operationFrom.setSumm(transaction.getSumm());
         operationFrom.setTimestamp(timestamp);
 
-        //todo трнасформировать Entity в Dto
         int result = operationService.transferMoney(operationTo, operationFrom, transaction.getLogin());
 
         if (result != -1){
