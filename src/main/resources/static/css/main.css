@@ -58,7 +58,7 @@ footer{
     padding: 10px;              /* Поля вокруг текста */
     background: #ffffff;        /* Цвет фона */
     width: 95%;                 /* Ширина слоя */
-    height: 70vh;
+    height: 700px;
     opacity: 0.95;              /* Значение прозрачности */
     filter: alpha(Opacity=95);  /* Прозрачность в IE */
     margin-left: auto;          /* Выравниваем слой по центру */
