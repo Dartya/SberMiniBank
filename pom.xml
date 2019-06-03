@@ -84,7 +84,16 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>docker-spring-boot</finalName>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>application.properties</include>
+				</includes>
+			</resource>
+		</resources>
+		<finalName>alexpit_sbermini</finalName>
 	</build>
 
 </project>
