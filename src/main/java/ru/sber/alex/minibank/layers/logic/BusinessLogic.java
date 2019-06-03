@@ -126,7 +126,8 @@ public class BusinessLogic {
             final String message = "На Ваш счет №"+transaction.getAccTo()+
                     " поступил перевод средств со счета №"
                     +transaction.getAccFrom()+" на сумму "
-                    +transaction.getSumm()+".\n\nВаш СбербМиниБанк.";
+                    +transaction.getSumm()+".\n\nВаш СбербМиниБанк." +
+                    "\n\n(Яндекс, это не спам!!!)";
 
             mailService.send(accountEntity.getClient().getEmail(), "Перевод средств", message);
             return 1;

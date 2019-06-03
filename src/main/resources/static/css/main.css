@@ -18,7 +18,7 @@ body {
     -o-background-size: 100%; /* Opera 9.6+ */
     background-size: 100%; /* Современные браузеры */
     background-repeat: no-repeat;
-    min-height: 450px;
+    min-height: 700px;
     background-color: #2a7731;
     margin-left: auto;          /* Выравниваем слой по центру */
     margin-right: auto;
@@ -58,10 +58,9 @@ footer{
     padding: 10px;              /* Поля вокруг текста */
     background: #ffffff;        /* Цвет фона */
     width: 95%;                 /* Ширина слоя */
-    height: 90%;
+    height: 70vh;
     opacity: 0.95;              /* Значение прозрачности */
     filter: alpha(Opacity=95);  /* Прозрачность в IE */
-    min-height: 450px;
     margin-left: auto;          /* Выравниваем слой по центру */
     margin-right: auto;
     margin-top: 5px;
