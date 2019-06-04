@@ -1,4 +1,4 @@
-package ru.sber.alex.minibank.repository;
+package ru.sber.alex.minibank.layers.services.jparepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.sber.alex.minibank.entities.OperationEntity;
@@ -6,7 +6,7 @@ import ru.sber.alex.minibank.entities.OperationEntity;
 import java.util.List;
 
 /**
- * Интерфейс - JpaRepository сущности БД "Операция"
+ * Интерфейс сервиса сущности БД "Операция".
  */
 public interface OperationRepo extends JpaRepository<OperationEntity, Long> {
 
@@ -17,9 +17,9 @@ public interface OperationRepo extends JpaRepository<OperationEntity, Long> {
     List<OperationEntity> findAll();
 
     /**
-     * Возвращает все операции указанного клиента
-     * @param id id клиента
-     * @return List операций
+     * Возвращает List с операциями пользователя с указанным id.
+     * @param id id пользователя
+     * @return
      */
     List<OperationEntity> findByAccountsId(Integer id);
 }

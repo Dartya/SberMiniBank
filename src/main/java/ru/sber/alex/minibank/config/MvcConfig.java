@@ -12,16 +12,13 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import ru.sber.alex.minibank.layers.services.jpaservices.ClientDetailServiceImpl;
+import ru.sber.alex.minibank.layers.services.jparepository.ClientDetailService;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  * Главный конфиг MVC-приложения.
@@ -40,7 +37,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean
     @Qualifier("myUserDetailServiceImpl")
     public UserDetailsService getUserDetailService(){
-        return new ClientDetailServiceImpl();
+        return new ClientDetailService();
     }
 
     @Autowired

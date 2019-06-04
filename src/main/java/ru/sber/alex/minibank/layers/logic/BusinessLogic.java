@@ -3,7 +3,6 @@ package ru.sber.alex.minibank.layers.logic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import ru.sber.alex.minibank.dto.ClientDto;
 import ru.sber.alex.minibank.dto.ClientOperationDto;
 import ru.sber.alex.minibank.dto.TransactionDto;
@@ -11,14 +10,12 @@ import ru.sber.alex.minibank.entities.AccountEntity;
 import ru.sber.alex.minibank.entities.ClientEntity;
 import ru.sber.alex.minibank.entities.OperationEntity;
 import ru.sber.alex.minibank.layers.services.commonservices.MailService;
-import ru.sber.alex.minibank.layers.services.jpaservices.AccountService;
-import ru.sber.alex.minibank.layers.services.jpaservices.ClientServiceImpl;
-import ru.sber.alex.minibank.layers.services.jpaservices.OperationServiceImpl;
+import ru.sber.alex.minibank.layers.services.jparepository.AccountRepo;
+import ru.sber.alex.minibank.layers.services.jparepository.ClientService;
+import ru.sber.alex.minibank.layers.services.jparepository.OperationService;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Основной класс бизнес-логики приложения - связывается с сервисами сущностей БД.
@@ -32,16 +29,16 @@ public class BusinessLogic {
     private RestTemplate restTemplate;
 */
     @Autowired
-    private ClientServiceImpl clientService;
+    private ClientService clientService;
 
     @Autowired
-    private OperationServiceImpl operationService;
+    private OperationService operationService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private AccountService accountService;
+    private AccountRepo accountRepo;
 
     @Autowired
     private MailService mailService;
@@ -121,7 +118,7 @@ public class BusinessLogic {
         int result = operationService.transferMoney(operationTo, operationFrom, transaction.getLogin());
 
         if (result != -1){
-            AccountEntity accountEntity = accountService.getById(transaction.getAccTo());
+            AccountEntity accountEntity = accountRepo.getById(transaction.getAccTo());
 
             final String message = "На Ваш счет №"+transaction.getAccTo()+
                     " поступил перевод средств со счета №"

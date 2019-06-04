@@ -1,11 +1,12 @@
-package ru.sber.alex.minibank.layers.services.jpaservices;
+package ru.sber.alex.minibank.layers.services.jparepository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.sber.alex.minibank.entities.AccountEntity;
 
 /**
  * Интерфейс сервиса сущности БД "Счет".
  */
-public interface AccountService {
+public interface AccountRepo extends JpaRepository<AccountEntity, Long> {
 
     /**
      * Возвращает счет с указанным id.

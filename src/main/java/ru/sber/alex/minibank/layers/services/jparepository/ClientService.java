@@ -1,32 +1,28 @@
-package ru.sber.alex.minibank.layers.services.jpaservices;
+package ru.sber.alex.minibank.layers.services.jparepository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.sber.alex.minibank.dto.ClientDto;
 import ru.sber.alex.minibank.dto.ClientOperationDto;
 import ru.sber.alex.minibank.dto.OperationDto;
 import ru.sber.alex.minibank.entities.AccountEntity;
 import ru.sber.alex.minibank.entities.ClientEntity;
 import ru.sber.alex.minibank.entities.OperationEntity;
 import ru.sber.alex.minibank.layers.logic.TransferFuction;
-import ru.sber.alex.minibank.repository.ClientRepo;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Реализация сервиса сущности БД "Счет".
  */
 @Repository
 @Slf4j
-public class ClientServiceImpl implements ClientService {
+public class ClientService {
 
     /**
      * Код завершения операции - ошибка
@@ -44,14 +40,14 @@ public class ClientServiceImpl implements ClientService {
     private ClientRepo clientRepo;
 
     @Autowired
-    private OperationService operationService;
+    private OperationRepo operationRepo;
 
     /**
      * Достает из репозитория клиента с указанным логином.
      * @param login логин пользователя.
      * @return сущность БД "Клиент"
      */
-    @Override
+
     public ClientEntity getClient(String login) {
         return clientRepo.findByLogin(login);
     }
@@ -105,7 +101,7 @@ public class ClientServiceImpl implements ClientService {
 
         for (int i = 0; i < clientAccounts.size(); i++) {
             Integer accountId = clientAccounts.get(i).getId();
-            List<OperationEntity> operations = operationService.findByAccountsId(accountId);
+            List<OperationEntity> operations = operationRepo.findByAccountsId(accountId);
 
             for (OperationEntity operationEntity : operations) {
                 operationDtos.add(TransferFuction.operationEntityToDto(operationEntity));

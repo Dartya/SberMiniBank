@@ -19,7 +19,7 @@ body {
     background-size: 100%; /* Современные браузеры */
     background-repeat: no-repeat;
     min-height: 700px;
-    background-color: #2a7731;
+    background-color: #28a745;
     margin-left: auto;          /* Выравниваем слой по центру */
     margin-right: auto;
     margin-top: 5px;
@@ -58,9 +58,10 @@ footer{
     padding: 10px;              /* Поля вокруг текста */
     background: #ffffff;        /* Цвет фона */
     width: 95%;                 /* Ширина слоя */
-    height: 700px;
+    height: 90%;
     opacity: 0.95;              /* Значение прозрачности */
     filter: alpha(Opacity=95);  /* Прозрачность в IE */
+    min-height: 700px;
     margin-left: auto;          /* Выравниваем слой по центру */
     margin-right: auto;
     margin-top: 5px;
@@ -76,9 +77,9 @@ footer{
     margin-right: auto;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 95%;                 /* Ширина слоя */
     opacity: 1;                 /* Значение прозрачности */
     filter: alpha(Opacity=95);  /* Прозрачность в IE */
+    width: 95%;                 /* Ширина слоя */
 }
 
 .cusheader{

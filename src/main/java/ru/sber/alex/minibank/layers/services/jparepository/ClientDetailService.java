@@ -1,4 +1,4 @@
-package ru.sber.alex.minibank.layers.services.jpaservices;
+package ru.sber.alex.minibank.layers.services.jparepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,14 +17,14 @@ import java.util.Set;
  * Расширенная реализация сервиса сущности БД "Клиент". Используется Spring Security.
  */
 @Service
-public class ClientDetailServiceImpl implements UserDetailsService {
+public class ClientDetailService implements UserDetailsService {
 
     @Autowired
-    private ClientService clientService;
+    private ClientRepo clientRepo;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        ClientEntity client = clientService.getClient(s);
+        ClientEntity client = clientRepo.findByLogin(s);
         Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority(ClientRoleEnum.USER.name()));
 

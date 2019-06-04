@@ -1,4 +1,4 @@
-package ru.sber.alex.minibank.repository;
+package ru.sber.alex.minibank.layers.services.jparepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.sber.alex.minibank.entities.CurrenciesEntity;

@@ -1,11 +1,10 @@
-package ru.sber.alex.minibank.layers.services.jpaservices;
+package ru.sber.alex.minibank.layers.services.jparepository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.sber.alex.minibank.entities.AccountEntity;
 import ru.sber.alex.minibank.entities.OperationEntity;
-import ru.sber.alex.minibank.repository.OperationRepo;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -16,7 +15,7 @@ import java.util.List;
  */
 @Repository
 @Slf4j
-public class OperationServiceImpl implements OperationService {
+public class OperationService {
 
     /**
      * Код завершения операции - ошибка
@@ -34,13 +33,12 @@ public class OperationServiceImpl implements OperationService {
     private OperationRepo operationRepo;
 
     @Autowired
-    private AccountServiceImpl accountService;
+    private AccountService accountService;
 
     private AccountEntity getAccount(int id){
         return accountService.getById(id);
     }
 
-    @Override
     public List<OperationEntity> findByAccountsId(Integer id){
         return operationRepo.findByAccountsId(id);
     }

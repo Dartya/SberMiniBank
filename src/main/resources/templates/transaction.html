@@ -17,17 +17,17 @@
                     <table width="25%" style="margin-top: 30px; ">
                         <tr>
                             <td align="center"><p>Сумма: </p></td>
-                            <td align="center"><p><input class="input" type="text" th:field="*{summ}" /></p></td>
+                            <td align="center"><p><input class="input" type="number" step="0.01" th:field="*{summ}" /></p></td>
                             <td align="left"><p>Руб.</p></td>
                         </tr>
                         <tr>
                             <td align="center"><p>№ счета отправителя: </p></td>
-                            <td align="center"><p><input class="input" type="text" th:field="*{accFrom}" /></p></td>
+                            <td align="center"><p><input class="input" type="number" th:field="*{accFrom}" /></p></td>
                             <td>&nbsp;</td>
                         </tr>
                         <tr>
                             <td align="center"><p>№ счета адресата: </p></td>
-                            <td align="center"><p><input class="input" type="text" th:field="*{accTo}" /></p></td>
+                            <td align="center"><p><input class="input" type="number" th:field="*{accTo}" /></p></td>
                             <td>&nbsp;</td>
                         </tr>
                         <tr style="align: center;">
