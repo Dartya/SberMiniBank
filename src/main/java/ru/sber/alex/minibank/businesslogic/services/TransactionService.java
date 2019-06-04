@@ -11,52 +11,21 @@ import ru.sber.alex.minibank.data.jparepository.OperationRepoService;
 
 import java.sql.Timestamp;
 
-
+/**
+ * Сервис контроллера перевода средств другому клиенту
+ */
 @Service
 @Slf4j
-public class AccountService {
-/* Оставляю здесь до форка на микросервисную архитектуру
-    @Autowired
-    private RestTemplate restTemplate;
-*/
-    @Autowired
-    private OperationRepoService operationService;
+public class TransactionService {
 
     @Autowired
     private AccountRepository accountRepository;
 
     @Autowired
+    private OperationRepoService operationService;
+
+    @Autowired
     private MailService mailService;
-
-    /**
-     * Готовит данные для передачи в сервис операций, часть общей логики пополнения счета.
-     * @param transaction ДТО - заполненная форма транзакции.
-     * @return код успешности операции: 1 - ОК, -1 - ошибка.
-     */
-    public int makePush(TransactionDto transaction){
-        final OperationEntity operationEntity = new OperationEntity();
-        operationEntity.setAccountsId(transaction.getAccFrom());
-        operationEntity.setDictOperationID(2);
-        operationEntity.setSumm(transaction.getSumm());
-        operationEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
-
-        return operationService.pushMoney(operationEntity);
-    }
-
-    /**
-     * Готовит данные для передачи в сервис операций, часть общей логики выведения средств со счета.
-     * @param transaction ДТО - заполненная форма транзакции.
-     * @return код успешности операции: 1 - ОК, -1 - ошибка.
-     */
-    public int makePull(TransactionDto transaction){
-        final OperationEntity operationEntity = new OperationEntity();
-        operationEntity.setAccountsId(transaction.getAccFrom());
-        operationEntity.setDictOperationID(3);
-        operationEntity.setSumm(transaction.getSumm());
-        operationEntity.setTimestamp(new Timestamp(System.currentTimeMillis()));
-
-        return operationService.pullMoney(operationEntity, transaction.getLogin());
-    }
 
     /**
      * Готовит данные для передачи в сервис операций, часть общей логики перевода средств с одного счета на другой.

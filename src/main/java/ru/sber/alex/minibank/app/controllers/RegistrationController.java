@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.sber.alex.minibank.businesslogic.dto.ClientDto;
-import ru.sber.alex.minibank.businesslogic.services.ClientService;
+import ru.sber.alex.minibank.businesslogic.services.RegistrationService;
 
 /**
  * Контроллер регистрации пользователей.
@@ -16,7 +16,7 @@ import ru.sber.alex.minibank.businesslogic.services.ClientService;
 public class RegistrationController {
 
     @Autowired
-    private ClientService clientService;
+    private RegistrationService registrationService;
 
     @GetMapping("/registration")
     public String registrationGet(Model model){
@@ -32,7 +32,7 @@ public class RegistrationController {
             model.addAttribute("errorMessage", error);
             return "error";
         }
-        if (clientService.registerAcc(client) != -1) {
+        if (registrationService.registerAcc(client) != -1) {
             model.addAttribute("client", client);
             return "success";
         } else {
