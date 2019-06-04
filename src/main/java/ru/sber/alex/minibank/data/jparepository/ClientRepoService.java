@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Repository
 @Slf4j
-public class ClientRepoConnector {
+public class ClientRepoService {
 
     /**
      * Код завершения операции - ошибка
@@ -37,10 +37,10 @@ public class ClientRepoConnector {
     private EntityManager entityManager;
 
     @Autowired
-    private ClientRepo clientRepo;
+    private ClientRepository clientRepository;
 
     @Autowired
-    private OperationRepo operationRepo;
+    private OperationRepository operationRepository;
 
     /**
      * Достает из репозитория клиента с указанным логином.
@@ -49,7 +49,7 @@ public class ClientRepoConnector {
      */
 
     public ClientEntity getClient(String login) {
-        return clientRepo.findByLogin(login);
+        return clientRepository.findByLogin(login);
     }
 
     /**
@@ -64,7 +64,6 @@ public class ClientRepoConnector {
             entityManager.persist(client);
             entityManager.flush();
             int newClientId = client.getId();
-            System.out.println("id of an added client = "+newClientId);
 
             final AccountEntity accountEntity = new AccountEntity(newClientId, 1, new BigDecimal(0));
             entityManager.persist(accountEntity);
@@ -101,7 +100,7 @@ public class ClientRepoConnector {
 
         for (int i = 0; i < clientAccounts.size(); i++) {
             Integer accountId = clientAccounts.get(i).getId();
-            List<OperationEntity> operations = operationRepo.findByAccountsId(accountId);
+            List<OperationEntity> operations = operationRepository.findByAccountsId(accountId);
 
             for (OperationEntity operationEntity : operations) {
                 operationDtos.add(TransferConverter.operationEntityToDto(operationEntity));

@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.sber.alex.minibank.app.config.ClientRoleEnum;
 import ru.sber.alex.minibank.data.entities.ClientEntity;
-import ru.sber.alex.minibank.data.jparepository.ClientRepo;
+import ru.sber.alex.minibank.data.jparepository.ClientRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,11 +23,11 @@ import java.util.Set;
 public class ClientDetailService implements UserDetailsService {
 
     @Autowired
-    private ClientRepo clientRepo;
+    private ClientRepository clientRepository;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        ClientEntity client = clientRepo.findByLogin(s);
+        ClientEntity client = clientRepository.findByLogin(s);
         Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority(ClientRoleEnum.USER.name()));
 

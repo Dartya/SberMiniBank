@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.sber.alex.minibank.businesslogic.dto.TransactionDto;
 import ru.sber.alex.minibank.data.entities.AccountEntity;
 import ru.sber.alex.minibank.data.entities.OperationEntity;
-import ru.sber.alex.minibank.data.jparepository.AccountRepo;
-import ru.sber.alex.minibank.data.jparepository.OperationRepoConnector;
+import ru.sber.alex.minibank.data.jparepository.AccountRepository;
+import ru.sber.alex.minibank.data.jparepository.OperationRepoService;
 
 import java.sql.Timestamp;
 
@@ -20,10 +20,10 @@ public class AccountService {
     private RestTemplate restTemplate;
 */
     @Autowired
-    private OperationRepoConnector operationService;
+    private OperationRepoService operationService;
 
     @Autowired
-    private AccountRepo accountRepo;
+    private AccountRepository accountRepository;
 
     @Autowired
     private MailService mailService;
@@ -86,7 +86,7 @@ public class AccountService {
         int result = operationService.transferMoney(operationTo, operationFrom, transaction.getLogin());
 
         if (result != -1){
-            AccountEntity accountEntity = accountRepo.getById(transaction.getAccTo());
+            AccountEntity accountEntity = accountRepository.getById(transaction.getAccTo());
 
             final String message = "На Ваш счет №"+transaction.getAccTo()+
                     " поступил перевод средств со счета №"

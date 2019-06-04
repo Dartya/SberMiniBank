@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import ru.sber.alex.minibank.businesslogic.dto.ClientDto;
 import ru.sber.alex.minibank.businesslogic.dto.ClientOperationDto;
 import ru.sber.alex.minibank.data.entities.ClientEntity;
-import ru.sber.alex.minibank.data.jparepository.ClientRepoConnector;
+import ru.sber.alex.minibank.data.jparepository.ClientRepoService;
+
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class ClientService {
     private RestTemplate restTemplate;
 */
     @Autowired
-    private ClientRepoConnector clientRepoConnector;
+    private ClientRepoService clientRepoService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -42,7 +43,7 @@ public class ClientService {
         clientEntity.setSurname(client.getSurname());
         clientEntity.setSecondName(client.getSecondName());
 
-        return clientRepoConnector.addClient(clientEntity);
+        return clientRepoService.addClient(clientEntity);
     }
 
     /**
@@ -51,6 +52,6 @@ public class ClientService {
      * @return List с заполненными ДТО ClientOperationDto
      */
     public List<ClientOperationDto> getClientHistory(String clientLogin){
-        return clientRepoConnector.getClientOperationsDto(clientLogin);
+        return clientRepoService.getClientOperationsDto(clientLogin);
     }
 }

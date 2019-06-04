@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Интерфейс сервиса сущности БД "Операция".
  */
-public interface OperationRepo extends JpaRepository<OperationEntity, Long> {
+public interface OperationRepository extends JpaRepository<OperationEntity, Long> {
 
     /**
      * Возвращает все операции из репозитория

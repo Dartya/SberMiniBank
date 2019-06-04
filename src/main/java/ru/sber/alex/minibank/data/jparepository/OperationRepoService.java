@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Repository
 @Slf4j
-public class OperationRepoConnector {
+public class OperationRepoService {
 
     /**
      * Код завершения операции - ошибка
@@ -30,17 +30,17 @@ public class OperationRepoConnector {
     private EntityManager entityManager;
 
     @Autowired
-    private OperationRepo operationRepo;
+    private OperationRepository operationRepository;
 
     @Autowired
-    private AccountRepo accountRepo;
+    private AccountRepository accountRepository;
 
     private AccountEntity getAccount(int id){
-        return accountRepo.getById(id);
+        return accountRepository.getById(id);
     }
 
     public List<OperationEntity> findByAccountsId(Integer id){
-        return operationRepo.findByAccountsId(id);
+        return operationRepository.findByAccountsId(id);
     }
 
     /**

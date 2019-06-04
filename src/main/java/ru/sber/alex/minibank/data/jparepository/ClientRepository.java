@@ -1,7 +1,6 @@
 package ru.sber.alex.minibank.data.jparepository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import ru.sber.alex.minibank.data.entities.ClientEntity;
 
 import java.util.List;
@@ -9,8 +8,7 @@ import java.util.List;
 /**
  * Интерфейс сервиса сущности БД "Клиент".
  */
-@Repository
-public interface ClientRepo extends JpaRepository<ClientEntity, Long> {
+public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
 
     /**
      * Возвращает клиента с указанным логином

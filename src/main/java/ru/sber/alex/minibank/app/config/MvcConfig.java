@@ -43,7 +43,6 @@ public class MvcConfig implements WebMvcConfigurer {
     @Autowired
     private ObjectMapper objectMapper;
 
-
     /**
      * Добавляет обработчики ресурсов.
      * @param registry

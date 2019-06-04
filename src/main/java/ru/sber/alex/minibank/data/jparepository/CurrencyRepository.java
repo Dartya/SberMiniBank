@@ -6,5 +6,5 @@ import ru.sber.alex.minibank.data.entities.CurrenciesEntity;
 /**
  * Интерфейс - JpaRepository сущности БД "Валюта"
  */
-public interface CurrencyRepo extends JpaRepository<CurrenciesEntity, Long> {
+public interface CurrencyRepository extends JpaRepository<CurrenciesEntity, Long> {
 }
