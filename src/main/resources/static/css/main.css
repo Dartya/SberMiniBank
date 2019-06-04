@@ -68,6 +68,10 @@ footer{
     margin-bottom: 5px;
 }
 
+.greenback{
+    background-color: #28a745;
+}
+
 .cusfooter{
     border: 1px double black;
     border-radius: 5px;

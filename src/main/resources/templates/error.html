@@ -7,7 +7,7 @@
 
     <div th:replace="fragments/header :: copyheader"></div>
 
-    <body th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
+    <body style="background-color: #28a745;" th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf(#response.status)}">
         <div class="mainblock">
             <div class="container">
                 <h1 th:if="${!userError}" th:text="|${httpStatus.value()} - ${httpStatus.reasonPhrase}|">404</h1>
