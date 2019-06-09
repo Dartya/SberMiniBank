@@ -16,8 +16,11 @@ import java.sql.Timestamp;
 @Slf4j
 public class PullService {
 
-    @Autowired
-    private OperationRepoService operationService;
+    private final OperationRepoService operationService;
+
+    public PullService(OperationRepoService operationService) {
+        this.operationService = operationService;
+    }
 
     /**
      * Готовит данные для передачи в сервис операций, часть общей логики выведения средств со счета.

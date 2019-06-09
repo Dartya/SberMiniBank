@@ -18,8 +18,11 @@ import java.util.List;
 @Controller
 public class ClientController {
 
-    @Autowired
-    private ClientService clientService;
+    private final ClientService clientService;
+
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     /**
      * Возвращает страницу личного кабинета, при этом заполняет ее данными о пользователе, его счетах и историей операций.

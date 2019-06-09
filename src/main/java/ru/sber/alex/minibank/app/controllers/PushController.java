@@ -1,6 +1,5 @@
 package ru.sber.alex.minibank.app.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +15,11 @@ import ru.sber.alex.minibank.businesslogic.services.PushService;
 @Controller
 public class PushController {
 
-    @Autowired
-    private PushService pushService;
+    private final PushService pushService;
+
+    public PushController(PushService pushService) {
+        this.pushService = pushService;
+    }
 
     /**
      * Возвращает страницу с формой пополнения счета.
@@ -38,15 +40,22 @@ public class PushController {
      */
     @PostMapping("/push")
     public String pushMoneyPost(@ModelAttribute TransactionDto transaction, Model model){
+        if (CommonLogic.checkSum(transaction.getSumm(), model)) return "error";
+
         transaction.setLogin(CommonLogic.getCurrentLogin());
         int result = pushService.makePush(transaction);
-        if (result != -1){
-            model.addAttribute("message", "Счет пополнен!");
-            return "successtransaction";
-        }else {
-            model.addAttribute("userError", true);
-            model.addAttribute("errorMessage", "Ошибка при внесении средств.");
-            return "error";
+        switch (result) {
+            case 1:
+                model.addAttribute("message", "Счет пополнен!");
+                return "successtransaction";
+            case -1:
+                model.addAttribute("errorMessage", "Ошибка при внесении средств.");
+                break;
+            case -2:
+                model.addAttribute("errorMessage", "Указанный счет не найден.");
+                break;
         }
+        model.addAttribute("userError", true);
+        return "error";
     }
 }

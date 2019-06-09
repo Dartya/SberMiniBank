@@ -18,14 +18,17 @@ import java.sql.Timestamp;
 @Slf4j
 public class TransactionService {
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
-    @Autowired
-    private OperationRepoService operationService;
+    private final OperationRepoService operationService;
 
-    @Autowired
-    private MailService mailService;
+    private final MailService mailService;
+
+    public TransactionService(AccountRepository accountRepository, OperationRepoService operationService, MailService mailService) {
+        this.accountRepository = accountRepository;
+        this.operationService = operationService;
+        this.mailService = mailService;
+    }
 
     /**
      * Готовит данные для передачи в сервис операций, часть общей логики перевода средств с одного счета на другой.
@@ -54,7 +57,7 @@ public class TransactionService {
 
         int result = operationService.transferMoney(operationTo, operationFrom, transaction.getLogin());
 
-        if (result != -1){
+        if (result == 1){
             AccountEntity accountEntity = accountRepository.getById(transaction.getAccTo());
 
             final String message = "На Ваш счет №"+transaction.getAccTo()+
@@ -64,8 +67,8 @@ public class TransactionService {
                     "\n\n(Яндекс, это не спам!!!)";
 
             mailService.send(accountEntity.getClient().getEmail(), "Перевод средств", message);
-            return 1;
-        }
-        return -1;
+            return result;
+        } else
+        return result;
     }
 }

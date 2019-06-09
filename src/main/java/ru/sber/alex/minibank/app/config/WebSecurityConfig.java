@@ -20,9 +20,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    @Qualifier("myUserDetailServiceImpl")
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    public WebSecurityConfig(@Qualifier("myUserDetailServiceImpl") UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     /**
      * Бин-шифровальщик паролей.

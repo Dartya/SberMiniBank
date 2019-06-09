@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.sber.alex.minibank.businesslogic.services.ClientDetailService;
+import ru.sber.alex.minibank.data.jparepository.ClientRepository;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -34,14 +35,17 @@ public class MvcConfig implements WebMvcConfigurer {
     @Value("${db.password}")
     private String dbPassword;
 
+    private final ObjectMapper objectMapper;
+
+    public MvcConfig(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     @Bean
     @Qualifier("myUserDetailServiceImpl")
     public UserDetailsService getUserDetailService(){
         return new ClientDetailService();
     }
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     /**
      * Добавляет обработчики ресурсов.

@@ -22,4 +22,12 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
      * @return List с клиентами
      */
     List<ClientEntity> findAll();
+
+
+    /**
+     * Возвращает клиента с указанным e-mail
+     * @param email e-mail пользователя
+     * @return сущность БД "Клиент"
+     */
+    ClientEntity findByEmail(String email);
 }

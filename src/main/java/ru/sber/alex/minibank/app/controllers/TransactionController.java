@@ -16,8 +16,11 @@ import ru.sber.alex.minibank.businesslogic.services.TransactionService;
 @Controller
 public class TransactionController {
 
-    @Autowired
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
+
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     /**
      * Возвращает страницу с формой перевода средств со счета на счет.
@@ -38,14 +41,30 @@ public class TransactionController {
      */
     @PostMapping("/transaction")
     public String transactionPost(@ModelAttribute TransactionDto transaction, Model model){
-        transaction.setLogin(CommonLogic.getCurrentLogin());
-        if (transactionService.makeTransfer(transaction) != -1){
-            model.addAttribute("message", "Перевод успешно проведен!");
-            return "successtransaction";
-        }else {
+        if (CommonLogic.checkSum(transaction.getSumm(), model)) return "error";
+        if (transaction.getAccFrom() == transaction.getAccTo()){
             model.addAttribute("userError", true);
-            model.addAttribute("errorMessage", "Ошибка при переводе средств.");
+            model.addAttribute("errorMessage", "Нельзя сделать перевод между одним и тем же счетом!");
             return "error";
         }
+
+        transaction.setLogin(CommonLogic.getCurrentLogin());
+        int result = transactionService.makeTransfer(transaction);
+        switch (result) {
+            case 1:
+                model.addAttribute("message", "Перевод успешно проведен!");
+                return "successtransaction";
+            case -1:
+                model.addAttribute("errorMessage", "Ошибка при переводе средств.");
+                break;
+            case -2:
+                model.addAttribute("errorMessage", "Указанный счет отправителя не найден.");
+                break;
+            case -3:
+                model.addAttribute("errorMessage", "Указанный счет адресата не найден.");
+                break;
+        }
+        model.addAttribute("userError", true);
+        return "error";
     }
 }

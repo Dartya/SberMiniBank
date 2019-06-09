@@ -1,7 +1,6 @@
 package ru.sber.alex.minibank.data.jparepository;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.sber.alex.minibank.data.entities.AccountEntity;
 import ru.sber.alex.minibank.data.entities.OperationEntity;
@@ -18,22 +17,31 @@ import java.util.List;
 public class OperationRepoService {
 
     /**
-     * Код завершения операции - ошибка
+     * Код завершения операции - ошибка общая
      */
     private final static int ERROR = -1;
+    /**
+     * Код ошибки - счет не существует
+     */
+    private final static int ERROR_ACCOUNT_NOT_EXIST = -2;
+    /**
+     * Код ошибки - счета адресата не существует
+     */
+    private final static int ERROR_SECOND_ACCOUNT_NOT_EXIST = -3;
     /**
      * Код завершения операции - успех
      */
     private final static int OK = 1;
 
-    @Autowired
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
+    private final OperationRepository operationRepository;
+    private final AccountRepository accountRepository;
 
-    @Autowired
-    private OperationRepository operationRepository;
-
-    @Autowired
-    private AccountRepository accountRepository;
+    public OperationRepoService(EntityManager entityManager, OperationRepository operationRepository, AccountRepository accountRepository) {
+        this.entityManager = entityManager;
+        this.operationRepository = operationRepository;
+        this.accountRepository = accountRepository;
+    }
 
     private AccountEntity getAccount(int id){
         return accountRepository.getById(id);
@@ -53,6 +61,8 @@ public class OperationRepoService {
         try {
             System.out.println("operationEntity acc id = "+operationEntity.getAccountsId());
             final AccountEntity accountEntity = getAccount(operationEntity.getAccountsId());
+            if (accountEntity == null) return ERROR_ACCOUNT_NOT_EXIST;
+
             System.out.println("accountEtity id = "+accountEntity.getId());
             accountEntity.setDeposit(accountEntity.getDeposit().add(operationEntity.getSumm()));
 
@@ -76,6 +86,8 @@ public class OperationRepoService {
     public int pullMoney(OperationEntity operationEntity, String login){
         try {
             final AccountEntity accountEntity = getAccount(operationEntity.getAccountsId());
+            if (accountEntity == null) return ERROR_ACCOUNT_NOT_EXIST;
+
             if (accountEntity.getDeposit().subtract(operationEntity.getSumm()).doubleValue() >= 0.00 &&
                     accountEntity.getClient().getLogin().equals(login)) {
 
@@ -106,9 +118,11 @@ public class OperationRepoService {
     public int transferMoney(OperationEntity operationTo, OperationEntity operationFrom, String login){
         try {
             final AccountEntity accountTo = getAccount(operationTo.getSeconAccountId());  //аккаунт адресата
-            if (accountTo == null) return ERROR; //если аккаунта не существует - ошибка
+            if (accountTo == null) return ERROR_SECOND_ACCOUNT_NOT_EXIST; //если аккаунта не существует - ошибка
 
             final AccountEntity accountFrom = getAccount(operationTo.getAccountsId());    //аккаунт инициатора
+            if (accountFrom == null) return ERROR_ACCOUNT_NOT_EXIST; //если аккаунта не существует - ошибка
+
             if (accountFrom.getDeposit().subtract(operationFrom.getSumm()).doubleValue() >= 0.00 &&
                     accountFrom.getClient().getLogin().equals(login)) {
                 accountFrom.setDeposit(accountFrom.getDeposit().subtract(operationFrom.getSumm()));

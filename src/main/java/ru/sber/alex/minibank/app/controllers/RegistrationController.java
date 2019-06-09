@@ -1,6 +1,5 @@
 package ru.sber.alex.minibank.app.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,11 @@ import ru.sber.alex.minibank.businesslogic.services.RegistrationService;
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    private RegistrationService registrationService;
+    private final RegistrationService registrationService;
+
+    public RegistrationController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
     @GetMapping("/registration")
     public String registrationGet(Model model){
@@ -26,18 +28,32 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String registrationPost(@ModelAttribute ClientDto client, Model model) {
+        String error = "Ошибка регистрации пользователя";
+        String errorLogin = "Пользователь с указанным логином существует";
+        String errorEmail = "Пользователь с указанным E-mail существует";
+
         if (client.getName().equals("")) {
-            String error = "Ошибка регистрации пользователя";
             model.addAttribute("userError", true);
             model.addAttribute("errorMessage", error);
             return "error";
         }
-        if (registrationService.registerAcc(client) != -1) {
-            model.addAttribute("client", client);
-            return "success";
-        } else {
-            model.addAttribute("userError", true);
-            return "error";
+
+        switch (registrationService.registerAcc(client)){
+            case 1:
+                model.addAttribute("client", client);
+                return "success";
+            case -1:
+                model.addAttribute("errorMessage", error);
+                break;
+            case -2:
+                model.addAttribute("errorMessage", errorLogin);
+                break;
+            case -3:
+                model.addAttribute("errorMessage", errorEmail);
+                break;
         }
+
+        model.addAttribute("userError", true);
+        return "error";
     }
 }

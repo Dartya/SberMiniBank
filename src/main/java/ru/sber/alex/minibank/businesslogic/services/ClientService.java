@@ -23,8 +23,11 @@ public class ClientService {
     @Autowired
     private RestTemplate restTemplate;
 */
-    @Autowired
-    private ClientRepoService clientRepoService;
+    private final ClientRepoService clientRepoService;
+
+    public ClientService(ClientRepoService clientRepoService) {
+        this.clientRepoService = clientRepoService;
+    }
 
     /**
      * Запрашивает историю операций клиента с указанным в параметре логином.

@@ -15,11 +15,14 @@ import ru.sber.alex.minibank.data.jparepository.ClientRepoService;
 @Slf4j
 public class RegistrationService {
 
-    @Autowired
-    private ClientRepoService clientRepoService;
+    private final ClientRepoService clientRepoService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public RegistrationService(ClientRepoService clientRepoService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.clientRepoService = clientRepoService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     /**
      * Готовит данные для передачи в сервис клиентов для последующей регистрации клиента.

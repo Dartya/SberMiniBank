@@ -16,8 +16,11 @@ import ru.sber.alex.minibank.businesslogic.services.PullService;
 @Controller
 public class PullController {
 
-    @Autowired
-    private PullService pullService;
+    private final PullService pullService;
+
+    public PullController(PullService pullService) {
+        this.pullService = pullService;
+    }
 
     /**
      * Возвращает страницу с формой вывода средств со счета.
@@ -38,14 +41,22 @@ public class PullController {
      */
     @PostMapping("/pull")
     public String pullMoneyPost(@ModelAttribute TransactionDto transaction, Model model){
+        if (CommonLogic.checkSum(transaction.getSumm(), model)) return "error";
+
         transaction.setLogin(CommonLogic.getCurrentLogin());
-        if (pullService.makePull(transaction) != -1){
-            model.addAttribute("message", "Средства выведены!");
-            return "successtransaction";
-        }else {
-            model.addAttribute("userError", true);
-            model.addAttribute("errorMessage", "Ошибка при выводе средств.");
-            return "error";
+        int result = pullService.makePull(transaction);
+        switch (result) {
+            case 1:
+                model.addAttribute("message", "Средства выведены!");
+                return "successtransaction";
+            case -1:
+                model.addAttribute("errorMessage", "Ошибка при внесении средств.");
+                break;
+            case -2:
+                model.addAttribute("errorMessage", "Указанный счет не найден.");
+                break;
         }
+        model.addAttribute("userError", true);
+        return "error";
     }
 }

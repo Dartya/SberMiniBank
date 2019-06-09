@@ -1,7 +1,6 @@
 package ru.sber.alex.minibank.data.jparepository;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.sber.alex.minibank.businesslogic.dto.ClientOperationDto;
 import ru.sber.alex.minibank.businesslogic.dto.OperationDto;
@@ -33,14 +32,17 @@ public class ClientRepoService {
      */
     private final static int OK = 1;
 
-    @Autowired
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
-    @Autowired
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
 
-    @Autowired
-    private OperationRepository operationRepository;
+    private final OperationRepository operationRepository;
+
+    public ClientRepoService(EntityManager entityManager, ClientRepository clientRepository, OperationRepository operationRepository) {
+        this.entityManager = entityManager;
+        this.clientRepository = clientRepository;
+        this.operationRepository = operationRepository;
+    }
 
     /**
      * Достает из репозитория клиента с указанным логином.
@@ -48,7 +50,7 @@ public class ClientRepoService {
      * @return сущность БД "Клиент"
      */
 
-    public ClientEntity getClient(String login) {
+    private ClientEntity getClient(String login) {
         return clientRepository.findByLogin(login);
     }
 
@@ -56,11 +58,18 @@ public class ClientRepoService {
      * Выполняет транзакцию регистрации клиента.
      * Регистрирует клиента, берет его id, создает ему дефолтный рублевый счет с указанием владельца, записывает операцию создания счета.
      * @param client Сущность БД "Клиент"
-     * @return код успешности операции: 1 - ОК, -1 - ошибка.
+     * @return код успешности операции: 1 - ОК, -1 - общая ошибка, -2 - ошибка по логину, -3 - ошибка по e-mail.
      */
     @Transactional
     public int addClient(ClientEntity client){
+
         try{
+            ClientEntity clientEntity1 = clientRepository.findByLogin(client.getLogin());
+            ClientEntity clientEntity2 = clientRepository.findByEmail(client.getEmail());
+
+            if (clientEntity1 != null && clientEntity1.getLogin().equals(client.getLogin())) return -2;
+            if (clientEntity2 != null && clientEntity2.getEmail().equals(client.getEmail())) return -3;
+
             entityManager.persist(client);
             entityManager.flush();
             int newClientId = client.getId();
