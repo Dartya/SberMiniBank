@@ -11,7 +11,7 @@ insert into accounts (id, client_id, currency_id, deposit) values
 (1, 1, 1, 0.00),
 (2, 2, 1, 0.00);
 
-SET time_zone ='+03:00';
+/*SET time_zone ='+03:00'; */
 
 insert into operations (id, accounts_id, secon_account_id, summ, dict_operation_id, timestamp) values
 (1, 1, 2, 100.00, 2, '2019-06-02 22:51:00'),
