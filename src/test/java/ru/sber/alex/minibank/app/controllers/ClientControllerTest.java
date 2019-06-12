@@ -38,8 +38,6 @@ public class ClientControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Информация о клиенте")))
                 .andExpect(content().string(containsString("История операций")))
-                .andExpect(content().string(containsString("qwe")))
-                .andExpect(content().string(containsString("2019-06-02 22:51:00.0")))
-                .andExpect(content().string(containsString("2019-06-02 22:51:14.0")));
+                .andExpect(content().string(containsString("qwe")));
     }
 }
